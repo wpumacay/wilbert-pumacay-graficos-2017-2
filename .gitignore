@@ -1,0 +1,11 @@
+*.out
+*.exe
+*.cproject
+*.project
+*.cmake
+*.settings
+build_vs
+CMakeFiles
+CMakeCache.txt
+Makefile
+*.a
