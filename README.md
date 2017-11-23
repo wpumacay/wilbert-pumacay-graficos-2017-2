@@ -39,8 +39,6 @@ To use modern OpenGL, just change the definition variable in the root CMakeLists
 add_definitions( -DUSE_MODERN_OPENGL )
 ```
 
-## Assignment 1
+## Assignments
 
-WIP -> Adding summary of the project
-
-This part should have a summary of the assignment, I will post it in a few hours if possible.
+* [Assignment 1] ( https://github.com/wpumacay/wilbert-pumacay-graficos-2017-2/tree/master/assignments/assignment1 )
