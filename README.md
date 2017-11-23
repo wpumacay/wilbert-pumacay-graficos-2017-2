@@ -6,7 +6,15 @@
 * GLUT
 * GLU
 * GLEW -> need to be installed, wip: adding git submodule
+* GLFW -> included as a submodule, just clone with --recursive
 * GLM -> included as a submodule, just clone with --recursive
+
+## Support :
+
+Tested in :
+
+* OSX -> macbookair ( thanks xavier for letting me use your laptop :D )
+* Linux-Ubuntu
 
 ## Cloning it :
 
@@ -16,13 +24,12 @@ Make sure to clone the repo using --recursive
 git clone --recursive https://github.com/wpumacay/wilbert-pumacay-graficos-2017-2.git
 ```
 
-This will clone also the dependencies that reside in other repositories, like glm. If you have problems with other libraries, please let me know at wilbert.pumacay@ucsp.edu.pe so that I can add the submodules or fix the CMake files :D. ( Maybe I forgot some preprocessor flag to skip some dependencies )
-
-I intend to add glfw and glew as submodules, as I always run into the issue of installation of shared libraries vs static :(. Better to have the whole dependencies thete.
+This will clone also the dependencies that reside in other repositories, like glm and glfw. After some testing, it seems glut in macOS can't create a 3.3 core context, so instread I used GLFW. You don't have to install it, just clone with --recursive to download the repository. The cmake files provided will take care of the compilation. 
+If you have problems with other libraries, please let me know at wilbert.pumacay@ucsp.edu.pe so that I can add the submodules or fix the CMake files :D. ( Maybe I forgot some preprocessor flag to skip some dependencies )
 
 ## To compile :
 
-From the root directory of the project, run :
+If you have the cmake with command line tools, just type :
 
 ```
 cd [repo_root]
@@ -30,14 +37,31 @@ cmake .
 make
 ```
 
-The default configuration can is to use GLUT as window creation system, and
+If using the cmake - GUI, just configure it with that, and make the build directory the same as the root directory (in place build) as some resources are loaded relative to some paths. If done wrong, the shaders may not be loaded :(.
+
+The default configuration is to use GLUT as window creation system, and
 by default uses legacy OpenGL.
 
-To use modern OpenGL, just change the definition variable in the root CMakeLists.txt file. Comment the following 
+To use modern OpenGL, just change this part in the root CMakeLists.txt file. Set the '0' to '1' to enable modern opengl.
 
-```
+```cmake
+if ( 0 )  ## set to 1 for modern opengl support
+
+message( "modern opengl enabled" )
+
+add_definitions( -DUSE_GLFW ) 
 add_definitions( -DUSE_MODERN_OPENGL )
+
+else()
+
+message( "legacy opengl enabled" )
+
+add_definitions( -DUSE_GLUT )
+
+endif()
 ```
+
+Modern opengl usage needs glfw as windowing system for macOS, so the library was provided as a submodule. When compiling the code, the glfw library will be compiled as well, so no installation is needed. Just make sure you download it with the **--recursive** option
 
 ## Assignments
 

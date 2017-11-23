@@ -9,6 +9,10 @@ make
 ./main.out
 ```
 
+## * OSX users
+
+There is a weird bug I run into when fixing the support for OSX, it seems the **first time you compile the code in modern support** the glfw clock doesn't work, so you may see the scene as static, and the light sources won't move. Just closing the application and running it again made the trick in my case.
+
 ## * Some sample output
 
 ### Legacy OpenGL

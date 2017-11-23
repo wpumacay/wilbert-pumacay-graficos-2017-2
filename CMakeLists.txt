@@ -42,7 +42,7 @@ elseif( APPLE )
 
 endif()
 
-if ( 0 )
+if ( 0 )  ## set to 1 for modern opengl support
 
 message( "modern opengl enabled" )
 
@@ -53,7 +53,7 @@ else()
 
 message( "legacy opengl enabled" )
 
-add_definitions( -DUSE_GLUT ) ## comment for modern opengl support
+add_definitions( -DUSE_GLUT )
 
 endif()
 
