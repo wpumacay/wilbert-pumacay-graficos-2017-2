@@ -38,16 +38,16 @@ This is a first attempt to make the base objects for a 3d game engine, hopefully
 
 For the assignment, just some files should be looked at :
 
-1. **main.cpp** : In this file we extend our application class to create the window with GLUT support ( there is also GLFW support in LINUX ), and create some objects using the miniengine code. We create the letters and a plane using a Mesh Builder ( implemented LMeshBuilder file ). The scene by default contains a light source, which can be switched to directional or punctual using a key during execution ( L key )
+1. [**main.cpp**]( https://github.com/wpumacay/wilbert-pumacay-graficos-2017-2/blob/master/assignments/assignment1/main.cpp ) : In this file we extend our application class to create the window with GLUT support ( there is also GLFW support in LINUX ), and create some objects using the miniengine code. We create the letters and a plane using a Mesh Builder ( implemented LMeshBuilder file ). The scene by default contains a light source, which can be switched to directional or punctual using a key during execution ( L key )
 
-2. **LScene.cpp** : This file represents the scene and stores the light source objects and the mesh objects. Our letters and the plane are mesh objects, and the lamp is a light source object. This meshes are _LMesh_ objects, which are constructed using the Mesh builder class.
+2. [**LScene.cpp**]( https://github.com/wpumacay/wilbert-pumacay-graficos-2017-2/blob/master/assignments/assignment1/miniengine/src/LScene.cpp ) : This file represents the scene and stores the light source objects and the mesh objects. Our letters and the plane are mesh objects, and the lamp is a light source object. This meshes are _LMesh_ objects, which are constructed using the Mesh builder class.
 
-3. **LMesh.cpp** : This file represents a mesh in 3d space and contains all the necessary data to render the object using OpenGL. Just check the **render** method, which is dependent of using modern or legacy accordingly.
+3. [**LMesh.cpp**]( https://github.com/wpumacay/wilbert-pumacay-graficos-2017-2/blob/master/assignments/assignment1/miniengine/src/LMesh.cpp ) : This file represents a mesh in 3d space and contains all the necessary data to render the object using OpenGL. Just check the **render** method, which is dependent of using modern or legacy accordingly.
 
-4. **LMeshBuilder.cpp** : This is the file that contains the implementation of the meshbuilder we use to create the object we use in our scene. Currently, it supports cubes, planes and extrusions.
+4. [**LMeshBuilder.cpp**]( https://github.com/wpumacay/wilbert-pumacay-graficos-2017-2/blob/master/assignments/assignment1/miniengine/src/LMeshBuilder.cpp ) : This is the file that contains the implementation of the meshbuilder we use to create the object we use in our scene. Currently, it supports cubes, planes and extrusions.
 The extrusion objects are the ones we use to build our letters, and these are built using a 2d profile given by a polygon ( convex or concave ) which is tesselated using the ear-clipping triangulation algorithm to generate the triangles. The implementation of the ear clipping algorithm is located in the LMiniCommon.h file, inside the implementation of the LPolygon class ( see **earClipTriangulate** in the **LPolygon** class )
 
-5. **shaders** : The shaders are located in the **res** folder, and there are two pairs of shaders. One pair is used to render object with no lighting, which is used to render the lamp that represents the lightsource, and the other pair is used to render objects with lighting. The pair used for the lighting case are shown below.
+5. [**shaders**]( https://github.com/wpumacay/wilbert-pumacay-graficos-2017-2/blob/master/assignments/assignment1/res/shaders/ ) : The shaders are located in the **res** folder, and there are two pairs of shaders. One pair is used to render object with no lighting, which is used to render the lamp that represents the lightsource, and the other pair is used to render objects with lighting. The pair used for the lighting case are shown below.
 
 **baseVertexShader3d_with_lighting.glsl**
 
