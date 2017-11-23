@@ -1,5 +1,7 @@
 # Assignments of the Computer Graphics course :D
 
+## Latest build 1.1
+
 ## Dependencies :
 
 * CMake
