@@ -40,7 +40,7 @@ namespace miniengine
         {
             
 #ifdef USE_GLFW
-            if ( pKey == GLFW_KEY_G )
+            if ( pKey == GLFW_KEY_L )
 #else
             if ( pKey == 108 )
 #endif

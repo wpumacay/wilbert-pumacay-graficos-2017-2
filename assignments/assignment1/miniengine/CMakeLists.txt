@@ -1,6 +1,6 @@
 message( "making the mini-engine library" )
 
-include_directories( include/ ../../../engine/include )
+include_directories( include/ ../../../engine/include /usr/local/include )
 
 add_library( miniengine_obj OBJECT
              src/LCamera3D.cpp

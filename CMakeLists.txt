@@ -20,35 +20,36 @@ if( WIN32 )
 	link_directories( ext/glew/lib/Release/x64 
 					  ext/glfw/lib-vc2015 )
 
-elseif( UNIX )
+elseif( UNIX AND NOT APPLE )
 
 	message( "making cat1 project for linux" )
 
 	find_package( OpenGL REQUIRED )
 	find_package( GLUT REQUIRED )
 	find_package( GLEW REQUIRED )
-	find_package( X11 REQUIRED )
-	find_package( Threads REQUIRED )
-	find_package( PkgConfig REQUIRED )
-	pkg_search_module( GLFW REQUIRED glfw3 )
 
-	include_directories( engine ${GLFW_INCLUDE_DIRS} ${GLUT_INCLUDE_DIRS} )
+	include_directories( engine ${GLUT_INCLUDE_DIRS} )
 
 elseif( APPLE )
 
-	message( "for mac, just glut support for the moment" )
+	message( "making cat 1 project for macos" )
 
 	find_package( OpenGL REQUIRED )
 	find_package( GLUT REQUIRED )
 	find_package( GLEW REQUIRED )
 
+	include_directories( engine ${GLUT_INCLUDE_DIRS} )
+
 endif()
 
-add_definitions( -DGLM_ENABLE_EXPERIMENTAL )
-add_definitions( -DUSE_MODERN_OPENGL )
+add_definitions( -DUSE_GLFW )
+#add_definitions( -DUSE_GLUT )
+#add_definitions( -DUSE_MODERN_OPENGL )
 
+add_subdirectory( ext/glfw )
 add_subdirectory( ext/glm )
 
+include_directories( ext/glfw/include )
 include_directories( ext/glm )
 
 add_subdirectory( engine )

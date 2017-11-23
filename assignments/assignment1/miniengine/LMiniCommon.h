@@ -9,9 +9,10 @@
 #include <fstream>
 
 #include <GL/glew.h>
+#ifndef GLM_ENABLE_EXPERIMENTAL
+#define GLM_ENABLE_EXPERIMENTAL
+#endif
 #include <glm/glm.hpp>
-
-//#define USE_MODERN_OPENGL 1
 
 using namespace std;
 

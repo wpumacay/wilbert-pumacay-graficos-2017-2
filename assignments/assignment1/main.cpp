@@ -136,7 +136,7 @@ class Hw1App : public engine::core::LBaseApp
             m_timeNow += 0.02;
             m_timeDelta = 0.02;
         }
-            
+
 #endif
 
         if ( m_scene != NULL )

@@ -50,7 +50,15 @@ namespace engine
 
         bool LBaseApp::init()
         {
+            #ifdef USE_MODERN_OPENGL
+            cout << "USING MODERN OPENGL" << endl;
+            #else
+            cout << "USING LEGACY-COMPAT MODE OPENGL" << endl;
+            #endif
+
         #ifdef USE_GLFW
+            cout << "USING GLFW AS WINDOWING SYSTEM" << endl;
+
             glfwInit();
             glfwWindowHint( GLFW_CONTEXT_VERSION_MAJOR, ENGINE_GL_CONTEXT_VERSION_MAJOR );
             glfwWindowHint( GLFW_CONTEXT_VERSION_MINOR, ENGINE_GL_CONTEXT_VERSION_MINOR );
@@ -89,6 +97,7 @@ namespace engine
             glViewport( 0, 0, m_width, m_height );
 
         #elif USE_GLUT
+            cout << "USING GLUT AS WINDOWING SYSTEM" << endl;
 
             int _argc = 0;
             char* _argv;
