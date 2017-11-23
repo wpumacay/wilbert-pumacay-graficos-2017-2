@@ -1,7 +1,7 @@
 
 message( "making the cat1-engine project" )
 
-include_directories( include/ )
+include_directories( include/ /usr/local/include )
 
 add_library( cat1gl_obj OBJECT
              src/core/LBaseApp.cpp )

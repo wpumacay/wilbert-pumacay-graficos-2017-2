@@ -32,14 +32,12 @@ elseif( APPLE )
     target_link_libraries( main.out cat1gl miniengine glfw
                            ${OPENGL_LIBRARIES} 
                            ${GLUT_LIBRARY}
-                           GLEW::GLEW 
-                           GLU )
+                           GLEW::GLEW )
 
     add_executable( editor_ear_clipping_test.out editor_ear_clipping_test.cpp )
     target_link_libraries( editor_ear_clipping_test.out cat1gl miniengine glfw
                            ${OPENGL_LIBRARIES} 
                            ${GLUT_LIBRARY}
-                           GLEW::GLEW 
-                           GLU )
+                           GLEW::GLEW )
 
 endif()

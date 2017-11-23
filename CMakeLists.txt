@@ -42,9 +42,21 @@ elseif( APPLE )
 
 endif()
 
-add_definitions( -DUSE_GLFW )
-#add_definitions( -DUSE_GLUT )
-#add_definitions( -DUSE_MODERN_OPENGL )
+if ( 0 )
+
+message( "modern opengl enabled" )
+
+add_definitions( -DUSE_GLFW ) 
+add_definitions( -DUSE_MODERN_OPENGL )
+
+else()
+
+message( "legacy opengl enabled" )
+
+add_definitions( -DUSE_GLUT ) ## comment for modern opengl support
+
+endif()
+
 
 add_subdirectory( ext/glfw )
 add_subdirectory( ext/glm )

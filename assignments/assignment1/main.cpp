@@ -138,7 +138,7 @@ class Hw1App : public engine::core::LBaseApp
         }
 
 #endif
-
+        
         if ( m_scene != NULL )
         {
             m_scene->update( m_timeDelta );

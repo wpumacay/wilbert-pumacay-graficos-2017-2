@@ -62,7 +62,10 @@ namespace engine
             glfwInit();
             glfwWindowHint( GLFW_CONTEXT_VERSION_MAJOR, ENGINE_GL_CONTEXT_VERSION_MAJOR );
             glfwWindowHint( GLFW_CONTEXT_VERSION_MINOR, ENGINE_GL_CONTEXT_VERSION_MINOR );
-            glfwWindowHint( GLFW_OPENGL_PROFILE, GLFW_OPENGL_COMPAT_PROFILE );
+            glfwWindowHint( GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE );
+            #ifdef __APPLE__
+            glfwWindowHint( GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE ); // uncomment this statement to fix compilation on OS X
+            #endif
             glfwWindowHint( GLFW_RESIZABLE, ENGINE_WINDOW_RESIZABLE );
 
             m_window = glfwCreateWindow( ENGINE_APP_WIDTH, 
