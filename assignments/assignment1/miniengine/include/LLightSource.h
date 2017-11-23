@@ -16,7 +16,8 @@ namespace miniengine
     {
         enum
         {
-
+            LIGHT_TYPE_DIRECTIONAL = 0,
+            LIGHT_TYPE_POINT = 1
         };
     }
 
@@ -31,12 +32,15 @@ namespace miniengine
 
         LMesh* m_lamp;
 
+
         public :
 
         LVec3 ambient;
         LVec3 diffuse;
         LVec3 specular;
 
+        GLuint type;
+        bool isFixed;
 
         LLightSource()
         {
@@ -53,6 +57,9 @@ namespace miniengine
                                                      _params );
             m_lamp->disableLighting();
             m_lamp->material().ambient = LVec3( 1.0f, 1.0f, 1.0f );
+
+            type = lightType::LIGHT_TYPE_POINT;
+            isFixed = false;
         }
 
         LLightSource( const LVec3& pos )
@@ -73,6 +80,8 @@ namespace miniengine
             m_lamp->pos = pos;
             m_lamp->disableLighting();
             m_lamp->material().ambient = LVec3( 1.0f, 1.0f, 1.0f );
+
+            type = lightType::LIGHT_TYPE_DIRECTIONAL;
         }
 
         ~LLightSource()
@@ -86,8 +95,14 @@ namespace miniengine
 
         void setPosition( const LVec3& pos )
         {
+            if ( isFixed )
+            {
+                return;
+            }
+            
             m_pos = pos;
             m_lamp->pos = pos;
+            m_dir = LVec3( -pos.x, -pos.y, -pos.z );// Just point to the origin for now
         }
 
         LVec3 getPosition() { return m_pos; }

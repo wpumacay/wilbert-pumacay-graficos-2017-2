@@ -76,6 +76,8 @@ namespace miniengine
                                            0.1f, 100.0f );
         _rInfo.viewMat = m_camera->viewMatrix();
 
+        _rInfo.cameraPos = m_camera->pos;
+
         // construct light props to pass to the render stage
         for ( int q = 0; q < m_lights.size(); q++ )
         {
@@ -85,6 +87,7 @@ namespace miniengine
             _props.specular = m_lights[q]->specular;
             _props.pos = m_lights[q]->getPosition();
             _props.dir = m_lights[q]->getDirection();
+            _props.type = m_lights[q]->type;
 
             _rInfo.lights.push_back( _props );
         }

@@ -38,6 +38,40 @@ namespace miniengine
 
         virtual void onKeyDown( int pKey )
         {
+            
+#ifdef USE_GLFW
+            if ( pKey == GLFW_KEY_G )
+#else
+            if ( pKey == 108 )
+#endif
+            {
+                
+                for ( int q = 0; q < m_lights.size(); q++ )
+                {
+                    m_lights[q]->type = ( GLuint ) ( 1 - m_lights[q]->type );
+
+                    if ( m_lights[q]->type == lightType::LIGHT_TYPE_POINT )
+                    {
+                        cout << "changed light to point" << endl;
+                    }
+                    else
+                    {
+                        cout << "changed light to directional" << endl;
+                    }
+                }
+            }
+#ifdef USE_GLFW
+            else if ( pKey == GLFW_KEY_SPACE )
+#else
+            else if ( pKey == 32 )
+#endif
+            {
+                for ( int q = 0; q < m_lights.size(); q++ )
+                {
+                    m_lights[q]->isFixed = !m_lights[q]->isFixed;
+                }
+            }
+
             if ( m_camera != NULL )
             {
                 m_camera->onKeyDown( pKey );

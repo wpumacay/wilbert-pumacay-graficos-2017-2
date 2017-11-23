@@ -16,6 +16,8 @@ class Hw1App : public engine::core::LBaseApp
 {
     private :
 
+    bool m_canUpdate;
+
     miniengine::LMesh* m_letters[NUM_LETTERS];
 
     miniengine::LScene* m_scene;
@@ -107,6 +109,21 @@ class Hw1App : public engine::core::LBaseApp
                                                                  _bparams );
 
         //m_scene->addObject( m_testCube );
+
+        miniengine::LBuildParams _pparams;
+        _pparams.p_width = 20.0f;
+        _pparams.p_depth = 20.0f;
+
+        miniengine::LMesh* _plane = miniengine::LMeshBuilder::createMeshObject( miniengine::meshType::PLANE,
+                                                                                _pparams );
+        _plane->pos.y -= 1.0f;
+        _plane->material().ambient = miniengine::LVec3( 0.0f, 0.0f, 1.0f );
+        _plane->material().diffuse = miniengine::LVec3( 0.0f, 0.0f, 1.0f );
+        _plane->material().specular = miniengine::LVec3( 0.0f, 0.0f, 1.0f );
+        _plane->material().shininess = 40.0f;
+        m_scene->addObject( _plane );
+
+        m_canUpdate = true;
     }
 
     void render() override
@@ -114,9 +131,12 @@ class Hw1App : public engine::core::LBaseApp
 
 #ifndef USE_GLFW
 
-        m_timeNow += 0.02;
-        m_timeDelta = 0.02;
-
+        if ( m_canUpdate )
+        {
+            m_timeNow += 0.02;
+            m_timeDelta = 0.02;
+        }
+            
 #endif
 
         if ( m_scene != NULL )
@@ -140,7 +160,12 @@ class Hw1App : public engine::core::LBaseApp
             miniengine::LVec3 _pos = _lights[q]->getPosition();
             _pos.x = _x;
             _pos.z = _y;
-            _lights[q]->setPosition( _pos );
+
+            if ( !_lights[q]->isFixed )
+            {
+                _lights[q]->setPosition( _pos );
+            }
+                
         }
 
         m_scene->render();
@@ -158,6 +183,11 @@ class Hw1App : public engine::core::LBaseApp
 
         if ( pAction == GLFW_PRESS )
         {
+            if ( pKey == GLFW_KEY_SPACE )
+            {
+                m_canUpdate = !m_canUpdate;
+            }
+
             m_scene->onKeyDown( pKey );
         }
         else if ( pAction == GLFW_RELEASE )
@@ -220,6 +250,11 @@ class Hw1App : public engine::core::LBaseApp
 
         if ( pAction == KEY_DOWN )
         {
+            if ( pKey == 32 )
+            {
+                m_canUpdate = !m_canUpdate;
+            }
+
             m_scene->onKeyDown( pKey );
         }
         else if ( pAction == KEY_UP )

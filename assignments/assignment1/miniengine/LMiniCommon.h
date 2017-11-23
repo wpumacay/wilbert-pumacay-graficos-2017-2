@@ -131,12 +131,15 @@ namespace miniengine
 
         LVec3 pos;
         LVec3 dir;
+        GLuint type;
     };
 
     struct LRenderInfo
     {
         glm::mat4 viewMat;
         glm::mat4 projMat;
+
+        LVec3 cameraPos;
 
         vector<LLightProps> lights;
     };

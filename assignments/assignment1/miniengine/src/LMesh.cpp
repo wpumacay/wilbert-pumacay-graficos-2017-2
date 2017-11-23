@@ -170,10 +170,17 @@ namespace miniengine
                 // TODO: Might be useful to store the locations in the initialization to ...
                 // avoid calls to opengl every render call T_T
 
+                // TODO: T-T i think i should do this much stuff here, check an engine to see how to ...
+                // do it well
+
                 GLuint u_light_ambient  = glGetUniformLocation( _program.id, "u_light_ambient" );
                 GLuint u_light_diffuse  = glGetUniformLocation( _program.id, "u_light_diffuse" );
                 GLuint u_light_specular = glGetUniformLocation( _program.id, "u_light_specular" );
                 GLuint u_light_position = glGetUniformLocation( _program.id, "u_light_position" );
+                GLuint u_light_dir      = glGetUniformLocation( _program.id, "u_light_dir" );
+                GLuint u_light_type     = glGetUniformLocation( _program.id, "u_light_type" );
+
+                GLuint u_view_pos = glGetUniformLocation( _program.id, "u_view_pos" );
 
                 // for now just use the first light of the render info
 
@@ -183,6 +190,11 @@ namespace miniengine
                 glUniform3fv( u_light_diffuse, 1, ( GLfloat* ) &_light.diffuse );
                 glUniform3fv( u_light_specular, 1, ( GLfloat* ) &_light.specular );
                 glUniform3fv( u_light_position, 1, ( GLfloat* ) &_light.pos );
+                glUniform3fv( u_light_dir, 1, ( GLfloat* ) &_light.dir );
+
+                glUniform1i( u_light_type, ( GLint ) _light.type );
+
+                glUniform3fv( u_view_pos, 1, ( GLfloat* ) &rInfo.cameraPos );
 
                 // Set material properties
 

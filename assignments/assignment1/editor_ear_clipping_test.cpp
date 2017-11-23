@@ -305,7 +305,7 @@ struct LPolygon
 
     void render()
     {
-
+        
         glBegin( GL_LINES );
 
         for ( int q = 0; q < m_points.size(); q++ )
@@ -448,6 +448,8 @@ class Hw1App : public engine::core::LBaseApp
 
     }
 
+#ifdef USE_GLFW
+
     void onMouseButtonCallback( int pButton, 
                                 int pAction, 
                                 int pMods ) override
@@ -481,6 +483,39 @@ class Hw1App : public engine::core::LBaseApp
         //m_path.d_test_funct( _v );        
         m_path.addPoint( _v );
     }
+
+#else
+
+    void onMouseButtonCallback( int pButton, int pAction, 
+                                int x, int y ) override
+    {
+        if ( pAction != 0 )
+        {
+            return;
+        }
+
+        if ( pButton == 2 )
+        {
+            m_path.reset();
+            return;
+        }
+        else if ( pButton == 1 )
+        {
+            cout << "earClipTriangulate"<< endl;
+            m_path.earClipTriangulate();
+            return;
+        }
+
+        LVec2 _v;
+
+        _v.x = 2 * ( (float) x / ENGINE_APP_WIDTH - 0.5 );
+        _v.y = 2 * ( 0.5 - (float) y / ENGINE_APP_HEIGHT );
+    
+        //m_path.d_test_funct( _v );        
+        m_path.addPoint( _v );
+    }
+
+#endif
 
 };
 
