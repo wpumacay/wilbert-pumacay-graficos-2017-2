@@ -22,6 +22,7 @@ namespace hw
         vector<LVec3> m_path;
 
         bool m_motionStarted;
+        bool m_paused;
 
         LVec3 m_start;
         int m_currentPathIndx;
@@ -47,6 +48,7 @@ namespace hw
             m_start = start;
 
             m_motionStarted = false;
+            m_paused = false;
             m_currentPathIndx = 0;
         }
 
@@ -83,23 +85,33 @@ namespace hw
 
         void stopMovement()
         {
-            m_motionStarted = false;
-            auto _movComponent = getComponent<LBallMovementComponent>();
-            _movComponent->stop();            
+            m_paused = true;
+
+            if ( m_motionStarted )
+            {
+                auto _movComponent = getComponent<LBallMovementComponent>();
+                _movComponent->stop();            
+            }
         }
 
         void resumeMovement()
         {
-            m_motionStarted = true;
-            auto _movComponent = getComponent<LBallMovementComponent>();
-            _movComponent->resume();            
+            m_paused = false;
+
+            if ( m_motionStarted )
+            {
+                auto _movComponent = getComponent<LBallMovementComponent>();
+                _movComponent->resume();            
+            }
         }
+
+        bool isPaused() { return m_paused; }
 
         void update( float dt ) override
         {
             LEntity::update( dt );
 
-            if ( m_motionStarted )
+            if ( m_motionStarted && !m_paused )
             {
                 auto _movComponent = getComponent<LBallMovementComponent>();
                 if ( !_movComponent->isMoving() )

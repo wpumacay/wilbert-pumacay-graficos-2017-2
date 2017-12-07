@@ -32,6 +32,7 @@
 #define L_KEY_9 GLFW_KEY_9
 #define L_KEY_A GLFW_KEY_A
 #define L_KEY_B GLFW_KEY_B
+#define L_KEY_B_MAYUS GLFW_KEY_B
 #define L_KEY_C GLFW_KEY_C
 #define L_KEY_D GLFW_KEY_D
 #define L_KEY_E GLFW_KEY_E
@@ -54,8 +55,11 @@
 #define L_KEY_V GLFW_KEY_V
 #define L_KEY_W GLFW_KEY_W
 #define L_KEY_X GLFW_KEY_X
+#define L_KEY_X_MAYUS GLFW_KEY_X
 #define L_KEY_Y GLFW_KEY_Y
+#define L_KEY_Y_MAYUS GLFW_KEY_Y
 #define L_KEY_Z GLFW_KEY_Z
+#define L_KEY_Z_MAYUS GLFW_KEY_Z
 #define L_KEY_ESCAPE GLFW_KEY_ESCAPE
 #define L_KEY_ENTER GLFW_KEY_ENTER
 #define L_KEY_TAB GLFW_KEY_TAB

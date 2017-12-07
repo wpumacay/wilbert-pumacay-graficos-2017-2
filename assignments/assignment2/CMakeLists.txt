@@ -34,12 +34,16 @@ elseif( UNIX AND NOT APPLE )
 
     if ( WINDOWING_SYSTEM STREQUAL "GLFW" )
 
+        message( "GLFW!!!!" )
+
         target_link_libraries( assignment2.out glfw
                                ${OPENGL_LIBRARIES} 
                                GLEW::GLEW 
                                ${GLUT_LIBRARY} )
 
     elseif( WINDOWING_SYSTEM STREQUAL "GLUT" )
+
+        message( "GLUT!!!!" )
 
         target_link_libraries( assignment2.out
                                ${OPENGL_LIBRARIES} 

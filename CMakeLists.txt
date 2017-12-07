@@ -51,6 +51,7 @@ set( WINDOWING_SYSTEM "GLFW" CACHE STRING "GLFW" )
 add_definitions( -DUSE_GLFW ) 
 add_definitions( -DGLFW_SUPPORT_ENABLED ) 
 add_definitions( -DUSE_MODERN_OPENGL )
+add_definitions( -DUSE_MODERN ) ## use glsl 330+ version
 
 else()
 

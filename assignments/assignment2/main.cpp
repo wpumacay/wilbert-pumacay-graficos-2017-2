@@ -15,6 +15,10 @@ bool g_isMainPointLightActive = true;
 hw::LTestScene* g_scene;
 engine::LWindow* g_window;
 
+engine::LVertexArray* g_xAxis;
+engine::LVertexArray* g_yAxis;
+engine::LVertexArray* g_zAxis;
+
 engine::LSceneRenderer* g_renderer;
 
 #define POINT_A engine::LVec3(  3.0f, 1.0f,  5.0f )
@@ -22,6 +26,29 @@ engine::LSceneRenderer* g_renderer;
 #define POINT_C engine::LVec3(  3.5f, 1.0f, -2.5f )
 
 #ifdef GLUT_SUPPORT_ENABLED
+
+void onMouseCallback( int button, int action, double x, double y )
+{
+    //cout << "button: " << button << " action: " << action << endl;
+
+    if ( button == 2 && action == 0 )
+    {
+        // a single right click press was made
+        auto _ball = g_scene->getBall();
+
+        if ( _ball->hasMotionStarted() )
+        {
+            if ( _ball->isPaused() )
+            {
+                _ball->resumeMovement();
+            }
+            else
+            {
+                _ball->stopMovement();
+            }   
+        }
+    }
+}
 
 void _onDefaultViewPoint()
 {
@@ -98,6 +125,43 @@ void onDisplayCallback()
 
     g_scene->update( 0.021 );
 
+    GLuint _debugShader = engine::LShaderManager::INSTANCE->programs["debug3d"];
+
+    glUseProgram( _debugShader );
+
+    GLuint _u_proj = glGetUniformLocation( _debugShader, "u_tProj" );
+    GLuint _u_view = glGetUniformLocation( _debugShader, "u_tView" );
+    GLuint _u_color = glGetUniformLocation( _debugShader, "u_color" );
+
+    glUniformMatrix4fv( _u_proj, 1, GL_FALSE, glm::value_ptr( g_scene->getProjMatrix() ) );
+    glUniformMatrix4fv( _u_view, 1, GL_FALSE, glm::value_ptr( g_scene->getCurrentCamera()->getViewMatrix() ) );
+
+    // Draw the x axis
+    g_xAxis->bind();
+    glUniform3f( _u_color, 1.0f, 0.0f, 0.0f );
+
+    glDrawArrays( GL_LINES, 0, 2 );
+
+    g_xAxis->unbind();
+
+    // Draw the y axis
+    g_yAxis->bind();
+    glUniform3f( _u_color, 1.0f, 0.0f, 1.0f );
+
+    glDrawArrays( GL_LINES, 0, 2 );
+
+    g_yAxis->unbind();
+
+    // Draw the z axis
+    g_zAxis->bind();
+    glUniform3f( _u_color, 0.0f, 0.0f, 1.0f );
+
+    glDrawArrays( GL_LINES, 0, 2 );
+
+    g_zAxis->unbind();
+
+    glUseProgram( 0 );
+
     g_renderer->begin( g_scene );
     g_renderer->renderScene( g_scene );
     g_renderer->end( g_scene );
@@ -135,14 +199,17 @@ void onKeyCallback( int key, int action )
 
             if ( _ball->hasMotionStarted() )
             {
-                _ball->stopMovement();
-            }
-            else
-            {
-                _ball->resumeMovement();
+                if ( _ball->isPaused() )
+                {
+                    _ball->resumeMovement();
+                }
+                else
+                {
+                    _ball->stopMovement();
+                }   
             }
         }
-        else if ( key == L_KEY_R )
+        else if ( key == L_KEY_B || key == L_KEY_B_MAYUS )
         {
             auto _ball = g_scene->getBall();
 
@@ -190,6 +257,7 @@ int main()
     g_window->registerKeyCallback( onKeyCallback );
 
 #ifdef GLUT_SUPPORT_ENABLED
+    g_window->registerMouseCallback( onMouseCallback );
     g_window->registerDisplayCallback( onDisplayCallback );
 #endif
 
@@ -203,6 +271,40 @@ int main()
     
     g_renderer->enableLighting();
     g_scene->enableLighting();
+
+    // TODO: Abstract the debug primitives into a separate layer :(
+    engine::LVertexBuffer* _xAxisBuff = new engine::LVertexBuffer();
+    GLfloat _xAxisData[] = 
+    {
+         0.0f, 0.0f, 0.0f,
+        10.0f, 0.0f, 0.0f
+    };
+    _xAxisBuff->setData( 6 * sizeof( GLfloat ), 3, _xAxisData );
+
+    g_xAxis = new engine::LVertexArray();
+    g_xAxis->addBuffer( _xAxisBuff, 0 );
+
+    engine::LVertexBuffer* _yAxisBuff = new engine::LVertexBuffer();
+    GLfloat _yAxisData[] = 
+    {
+         0.0f,  0.0f, 0.0f,
+         0.0f, 10.0f, 0.0f
+    };
+    _yAxisBuff->setData( 6 * sizeof( GLfloat ), 3, _yAxisData );
+
+    g_yAxis = new engine::LVertexArray();
+    g_yAxis->addBuffer( _yAxisBuff, 0 );
+
+    engine::LVertexBuffer* _zAxisBuff = new engine::LVertexBuffer();
+    GLfloat _zAxisData[] = 
+    {
+         0.0f, 0.0f,  0.0f,
+         0.0f, 0.0f, 10.0f
+    };
+    _zAxisBuff->setData( 6 * sizeof( GLfloat ), 3, _zAxisData );
+
+    g_zAxis = new engine::LVertexArray();
+    g_zAxis->addBuffer( _zAxisBuff, 0 );
 
 #ifdef GLUT_SUPPORT_ENABLED
 
@@ -242,6 +344,46 @@ int main()
         g_window->pollEvents();
 
         g_scene->update( 0.02 );
+
+        GLuint _debugShader = engine::LShaderManager::INSTANCE->programs["debug3d"];
+
+        glUseProgram( _debugShader );
+
+        GLuint _u_proj = glGetUniformLocation( _debugShader, "u_tProj" );
+        GLuint _u_view = glGetUniformLocation( _debugShader, "u_tView" );
+        GLuint _u_color = glGetUniformLocation( _debugShader, "u_color" );
+
+        glUniformMatrix4fv( _u_proj, 1, GL_FALSE, glm::value_ptr( g_scene->getProjMatrix() ) );
+        glUniformMatrix4fv( _u_view, 1, GL_FALSE, glm::value_ptr( g_scene->getCurrentCamera()->getViewMatrix() ) );
+
+        // Draw axis x
+        g_xAxis->bind();
+
+        glUniform3f( _u_color, 1.0f, 0.0f, 0.0f );
+
+        glDrawArrays( GL_LINES, 0, 2 );
+
+        g_xAxis->unbind();
+
+        // Draw axis y
+        g_yAxis->bind();
+
+        glUniform3f( _u_color, 0.0f, 1.0f, 0.0f );
+
+        glDrawArrays( GL_LINES, 0, 2 );
+
+        g_yAxis->unbind();        
+
+        // Draw axis z
+        g_zAxis->bind();
+
+        glUniform3f( _u_color, 0.0f, 0.0f, 1.0f );
+
+        glDrawArrays( GL_LINES, 0, 2 );
+
+        g_zAxis->unbind();
+
+        glUseProgram( 0 );
 
         g_renderer->begin( g_scene );
         g_renderer->renderScene( g_scene );

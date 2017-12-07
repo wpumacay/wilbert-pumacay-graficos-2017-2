@@ -29,6 +29,12 @@ namespace engine
         _program = createProgram( _vShader, _fShader );
 
         programs["basic3d_lighting"] = _program;
+
+        _vShader = createShader( "res/shaders/debug_shader3d_vs.glsl", GL_VERTEX_SHADER );
+        _fShader = createShader( "res/shaders/debug_shader3d_fs.glsl", GL_FRAGMENT_SHADER );
+        _program = createProgram( _vShader, _fShader );
+
+        programs["debug3d"] = _program;
 #else
         cout << "LShaderManager-> using glsl 120 shaders" << endl;
 
@@ -43,6 +49,12 @@ namespace engine
         _program = createProgram( _vShader, _fShader );
 
         programs["basic3d_lighting"] = _program;
+
+        _vShader = createShader( "res/shaders/debug_shader3d_vs_120.glsl", GL_VERTEX_SHADER );
+        _fShader = createShader( "res/shaders/debug_shader3d_fs_120.glsl", GL_FRAGMENT_SHADER );
+        _program = createProgram( _vShader, _fShader );
+
+        programs["debug3d"] = _program;
 #endif
     }
 
