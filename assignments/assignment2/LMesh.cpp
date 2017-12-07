@@ -119,20 +119,25 @@ namespace engine
             for ( int q = 0; q < m_vertices.size(); q++ )
             {
                 LVec3 _n( 0.0f, 0.0f, 0.0f );
+                LVec3 _v = m_vertices[q];
 
-                int count = 0;
-                for ( LInd3 _triInd : m_indices )
-                {
+                for ( int t = 0; t < m_indices.size(); t++ )
+                {   
+                    LInd3 _triInd = m_indices[t];
+
                     int i1 = _triInd.tri.i1;
                     int i2 = _triInd.tri.i2;
                     int i3 = _triInd.tri.i3;
-                    if ( i1 == q || i2 == q || i3 == q )
+
+                    LVec3 v1 = m_vertices[i1];
+                    LVec3 v2 = m_vertices[i2];
+                    LVec3 v3 = m_vertices[i3];
+
+                    if ( LVec3::equal( _v, v1 ) || LVec3::equal( _v, v2 ) || LVec3::equal( _v, v3 ) )
                     {
                         _n = _n + LMeshBuilder::_computeFaceNormal( m_vertices[i1], m_vertices[i2], m_vertices[i3], true );
-                        count++;
                     }
                 }
-                //cout << "count: " << count << endl;
                 _n.normalize();
                 _normals.push_back( _n );
             }

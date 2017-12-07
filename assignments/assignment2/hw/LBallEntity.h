@@ -36,7 +36,7 @@ namespace hw
                                                         LVec3( 1.0f, 0.84f, 0.0f ),
                                                         125.0f );
 
-            LMesh* _sphereMesh = LMeshBuilder::createFromFile( "../res/models/model_sphere_1024.obj" );
+            LMesh* _sphereMesh = LMeshBuilder::createFromFile( "res/models/model_sphere_1024.obj" );
 
             _sphereMesh->setMaterial( _sphereMaterial );
 

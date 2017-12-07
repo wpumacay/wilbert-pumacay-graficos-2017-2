@@ -97,7 +97,8 @@
 #define L_KEY_8 56
 #define L_KEY_9 57
 #define L_KEY_A 65
-#define L_KEY_B 66
+#define L_KEY_B 98
+#define L_KEY_B_MAYUS 66
 #define L_KEY_C 67
 #define L_KEY_D 68
 #define L_KEY_E 69

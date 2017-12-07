@@ -16,26 +16,30 @@ namespace engine
 
         GLuint _vShader, _fShader, _program;
 #ifdef USE_MODERN
-        _vShader = createShader( "../res/shaders/basic3d_vs.glsl", GL_VERTEX_SHADER );
-        _fShader = createShader( "../res/shaders/basic3d_fs.glsl", GL_FRAGMENT_SHADER );
+        cout << "LShaderManager-> using glsl 330 core shaders" << endl;
+
+        _vShader = createShader( "res/shaders/basic3d_vs.glsl", GL_VERTEX_SHADER );
+        _fShader = createShader( "res/shaders/basic3d_fs.glsl", GL_FRAGMENT_SHADER );
         _program = createProgram( _vShader, _fShader );
 
         programs["basic3d"] = _program;
 
-        _vShader = createShader( "../res/shaders/basic3d_lighting_vs.glsl", GL_VERTEX_SHADER );
-        _fShader = createShader( "../res/shaders/basic3d_lighting_fs.glsl", GL_FRAGMENT_SHADER );
+        _vShader = createShader( "res/shaders/basic3d_lighting_vs.glsl", GL_VERTEX_SHADER );
+        _fShader = createShader( "res/shaders/basic3d_lighting_fs.glsl", GL_FRAGMENT_SHADER );
         _program = createProgram( _vShader, _fShader );
 
         programs["basic3d_lighting"] = _program;
 #else
-        _vShader = createShader( "../res/shaders/basic3d_vs_120.glsl", GL_VERTEX_SHADER );
-        _fShader = createShader( "../res/shaders/basic3d_fs_120.glsl", GL_FRAGMENT_SHADER );
+        cout << "LShaderManager-> using glsl 120 shaders" << endl;
+
+        _vShader = createShader( "res/shaders/basic3d_vs_120.glsl", GL_VERTEX_SHADER );
+        _fShader = createShader( "res/shaders/basic3d_fs_120.glsl", GL_FRAGMENT_SHADER );
         _program = createProgram( _vShader, _fShader );
 
         programs["basic3d"] = _program;
 
-        _vShader = createShader( "../res/shaders/basic3d_lighting_vs_120.glsl", GL_VERTEX_SHADER );
-        _fShader = createShader( "../res/shaders/basic3d_lighting_fs_120.glsl", GL_FRAGMENT_SHADER );
+        _vShader = createShader( "res/shaders/basic3d_lighting_vs_120.glsl", GL_VERTEX_SHADER );
+        _fShader = createShader( "res/shaders/basic3d_lighting_fs_120.glsl", GL_FRAGMENT_SHADER );
         _program = createProgram( _vShader, _fShader );
 
         programs["basic3d_lighting"] = _program;

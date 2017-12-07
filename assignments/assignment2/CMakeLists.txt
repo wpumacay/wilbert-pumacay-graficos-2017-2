@@ -3,14 +3,14 @@
 
 if( WIN32 )
 
-    message( "Building tutorial 6 - windows" )
-    add_executable( main_6.exe main_6.cpp )
+    message( "Building assignment 1 - windows" )
+    message( "Sorry, haven't configured it yet" )
 
 elseif( UNIX AND NOT APPLE )
 
-    message( "Building tutorial 6 - linux" )
-    add_executable( main_6.out 
-                    main_6.cpp 
+    message( "Building assignment 2 - linux" )
+    add_executable( assignment2.out
+                    main.cpp 
                     LCommon.cpp
                     LComponent.cpp
                     LEntity.cpp
@@ -32,18 +32,67 @@ elseif( UNIX AND NOT APPLE )
                     LVertexBuffer.cpp
                     LWindow.cpp )
 
-    target_link_libraries( main_6.out
-                           ${OPENGL_LIBRARIES} 
-                           ${GLFW_LIBRARIES} 
-                           GLEW::GLEW 
-                           ${X11_LIBRARIES} 
-                           ${CMAKE_THREAD_LIBS_INIT}
-                           ${GLUT_LIBRARY}
-                           GLU
-                           dl )
+    if ( WINDOWING_SYSTEM STREQUAL "GLFW" )
+
+        target_link_libraries( assignment2.out glfw
+                               ${OPENGL_LIBRARIES} 
+                               GLEW::GLEW 
+                               ${GLUT_LIBRARY} )
+
+    elseif( WINDOWING_SYSTEM STREQUAL "GLUT" )
+
+        target_link_libraries( assignment2.out
+                               ${OPENGL_LIBRARIES} 
+                               GLEW::GLEW 
+                               ${GLUT_LIBRARY} )
+    else()
+
+        message( "WINDOWING_SYSTEM NOT SET CORRECTLY" )
+
+    endif()
 
 elseif( APPLE )
 
-    message( "Building tutorial 6 - macOS" )
+    message( "Building assignment 2 - macOS" )
+    add_executable( assignment2.out
+                    main.cpp 
+                    LCommon.cpp
+                    LComponent.cpp
+                    LEntity.cpp
+                    LFixedCamera3d.cpp
+                    LICamera.cpp
+                    LILight.cpp
+                    LIndexBuffer.cpp
+                    LLightDirectional.cpp
+                    LLightPoint.cpp
+                    LLightSpot.cpp
+                    LMaterial.cpp
+                    LMeshBuilder.cpp
+                    LMeshComponent.cpp
+                    LMesh.cpp
+                    LScene.cpp
+                    LSceneRenderer.cpp
+                    LShaderManager.cpp
+                    LVertexArray.cpp
+                    LVertexBuffer.cpp
+                    LWindow.cpp )
 
+    if ( ${WINDOWING_SYSTEM} EQUAL "GLFW" )
+
+        target_link_libraries( assignment2.out glfw
+                               ${OPENGL_LIBRARIES} 
+                               GLEW::GLEW 
+                               ${GLUT_LIBRARY} )
+
+    elseif( ${WINDOWING_SYSTEM} EQUAL "GLUT" )
+
+        target_link_libraries( assignment2.out
+                               ${OPENGL_LIBRARIES} 
+                               GLEW::GLEW 
+                               ${GLUT_LIBRARY} )
+    else()
+
+        message( "WINDOWING_SYSTEM NOT SET CORRECTLY" )
+
+    endif()
 endif()

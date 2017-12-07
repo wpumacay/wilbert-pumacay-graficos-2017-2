@@ -113,6 +113,20 @@ namespace engine
             return _res;
         }
 
+        static bool equal( LVec3 v1, LVec3 v2 )
+        {
+            LVec3 _delta = v1 - v2;
+
+            GLfloat _l = _delta.length();
+
+            if ( _l < 0.001 )
+            {
+                return true;
+            }
+
+            return false;
+        }
+
     };
 
     struct LTri

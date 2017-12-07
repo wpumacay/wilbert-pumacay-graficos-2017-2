@@ -42,18 +42,31 @@ elseif( APPLE )
 
 endif()
 
-if ( 0 )  ## set to 1 for modern opengl support
+if ( 0 )  ## set to 1 for glfw support
 
-message( "modern opengl enabled" )
+message( "USING GLFW AS WINDOWING SYSTEM" )
+
+set( WINDOWING_SYSTEM "GLFW" CACHE STRING "GLFW" )
 
 add_definitions( -DUSE_GLFW ) 
+add_definitions( -DGLFW_SUPPORT_ENABLED ) 
 add_definitions( -DUSE_MODERN_OPENGL )
 
 else()
 
-message( "legacy opengl enabled" )
+message( "USING GLUT AS WINDOWING SYSTEM" )
+
+set( WINDOWING_SYSTEM "GLUT" CACHE STRING "GLUT" )
 
 add_definitions( -DUSE_GLUT )
+add_definitions( -DGLUT_SUPPORT_ENABLED ) 
+
+	if ( 0 ) ## set to 1 to use v330 core glsl shaders
+
+	message( "MODERN OPENGL ENABLED - V120 with GLUT" )
+	add_definitions( -DUSE_MODERN )
+
+	endif()
 
 endif()
 
@@ -63,6 +76,7 @@ add_subdirectory( ext/glm )
 
 include_directories( ext/glfw/include )
 include_directories( ext/glm )
+include_directories( ext/stb )
 
 add_subdirectory( engine )
 add_subdirectory( assignments )

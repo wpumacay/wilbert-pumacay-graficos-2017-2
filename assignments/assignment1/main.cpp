@@ -107,8 +107,8 @@ class Hw1App : public engine::core::LBaseApp
 
         m_testCube = miniengine::LMeshBuilder::createMeshObject( miniengine::meshType::BOX,
                                                                  _bparams );
-
-        //m_scene->addObject( m_testCube );
+        m_testCube->pos = miniengine::LVec3( 1.0f, 2.0f, 3.0f );
+        m_scene->addObject( m_testCube );
 
         miniengine::LBuildParams _pparams;
         _pparams.p_width = 20.0f;
