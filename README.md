@@ -42,23 +42,37 @@ make
 If using the cmake - GUI, just configure it with that, and make the build directory the same as the root directory (in place build) as some resources are loaded relative to some paths. If done wrong, the shaders may not be loaded :(.
 
 The default configuration is to use GLUT as window creation system, and
-by default uses legacy OpenGL.
+by default uses ~~legacy~~ ( if using glut, can set the mode to use glsl v120 ) OpenGL.
 
 To use modern OpenGL, just change this part in the root CMakeLists.txt file. Set the '0' to '1' to enable modern opengl.
 
 ```cmake
-if ( 0 )  ## set to 1 for modern opengl support
+if ( 0 )  ## set to 1 for glfw support
 
-message( "modern opengl enabled" )
+message( "USING GLFW AS WINDOWING SYSTEM" )
+
+set( WINDOWING_SYSTEM "GLFW" CACHE STRING "GLFW" )
 
 add_definitions( -DUSE_GLFW ) 
+add_definitions( -DGLFW_SUPPORT_ENABLED ) 
 add_definitions( -DUSE_MODERN_OPENGL )
+add_definitions( -DUSE_MODERN ) ## use glsl 330+ version
 
 else()
 
-message( "legacy opengl enabled" )
+message( "USING GLUT AS WINDOWING SYSTEM" )
+
+set( WINDOWING_SYSTEM "GLUT" CACHE STRING "GLUT" )
 
 add_definitions( -DUSE_GLUT )
+add_definitions( -DGLUT_SUPPORT_ENABLED ) 
+
+    if ( 0 ) ## set to 1 to use v330 core glsl shaders
+
+    message( "MODERN OPENGL ENABLED - V120 with GLUT" )
+    add_definitions( -DUSE_MODERN )
+
+    endif()
 
 endif()
 ```
@@ -68,3 +82,4 @@ Modern opengl usage needs glfw as windowing system for macOS, so the library was
 ## Assignments
 
 * [Assignment 1] ( https://github.com/wpumacay/wilbert-pumacay-graficos-2017-2/tree/master/assignments/assignment1 )
+* [Assignment 2] ( https://github.com/wpumacay/wilbert-pumacay-graficos-2017-2/tree/master/assignments/assignment2 )
