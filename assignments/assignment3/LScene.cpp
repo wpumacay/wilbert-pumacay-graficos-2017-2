@@ -43,30 +43,6 @@ namespace engine
         }
     }
 
-    void LScene::enableLighting()
-    {
-        for ( LEntity* _entity : m_entities )
-        {
-            auto _meshComponent = _entity->getComponent<LMeshComponent>();
-            if ( _meshComponent != NULL )
-            {
-                _meshComponent->getMesh()->enableLighting();
-            }
-        }
-    }
-
-    void LScene::disableLighting()
-    {
-        for ( LEntity* _entity : m_entities )
-        {
-            auto _meshComponent = _entity->getComponent<LMeshComponent>();
-            if ( _meshComponent != NULL )
-            {
-                _meshComponent->getMesh()->disableLighting();
-            }
-        }
-    }
-
     void LScene::setShadingMode( bool useSmoothShading )
     {
         for ( LEntity* _entity : m_entities )

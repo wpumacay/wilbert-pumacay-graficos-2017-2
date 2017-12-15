@@ -71,6 +71,24 @@ namespace engine
         return _model;
     }
 
+    void LMesh::setTexture( LTexture* pTexture )
+    {
+        m_material->setTexture( pTexture );
+    }
+
+    bool LMesh::isTextured()
+    {
+        if ( m_material->getTexture() != NULL )
+        {
+            if ( m_material->getTexture()->enabled )
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     void LMesh::render()
     {
 
@@ -82,13 +100,9 @@ namespace engine
         m_vertexArray->bind();
         m_indexBuffer->bind();
 
-        m_material->bind();
-
         glDrawElements( GL_TRIANGLES, 
                         m_indexBuffer->getCount(), 
                         GL_UNSIGNED_INT, 0 );
-
-        m_material->unbind();
 
         m_indexBuffer->unbind();
         m_vertexArray->unbind();

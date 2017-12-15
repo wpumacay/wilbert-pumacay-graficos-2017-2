@@ -3,6 +3,9 @@
 
 #include "LCommon.h"
 #include "LILight.h"
+#include "LLightDirectional.h"
+#include "LLightDirectional.h"
+#include "LLightDirectional.h"
 #include "LEntity.h"
 #include "LICamera.h"
 #include "LFog.h"
@@ -46,14 +49,28 @@ namespace engine
             }
         }
 
-
-        void enableLighting();
-        void disableLighting();
-
         glm::mat4 getProjMatrix() { return m_projMatrix; }
         LICamera* getCurrentCamera() { return m_currentCamera; }
         vector<LILight*>& getLights() { return m_lights; }
         vector<LEntity*>& getEntities() { return m_entities; }
+
+        template< class T >
+        vector<T*> getLights()
+        {
+            auto _type = T::getStaticType();
+
+            vector<T*> _lights;
+
+            for ( LILight* _light : m_lights )
+            {
+                if ( _light->getType() == _type )
+                {
+                    _lights.push_back( ( T* ) _light );
+                }
+            }
+
+            return _lights;
+        }
 
         LFog* getFog() { return m_fog; }
 

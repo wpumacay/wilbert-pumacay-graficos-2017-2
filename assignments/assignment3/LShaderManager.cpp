@@ -3,6 +3,9 @@
 #include "LShaderManager.h"
 #include "../Config.h"
 
+#include "LShaderBasic3d.h"
+#include "LShaderLighting.h"
+
 using namespace std;
 
 namespace engine
@@ -43,18 +46,36 @@ namespace engine
         _program = createProgram( _vShader, _fShader );
 
         programs["basic3d"] = _program;
+        programObjs["basic3d"] = new LShaderBasic3d( _program );
 
         _vShader = createShader( "res/shaders/basic3d_lighting_vs_120.glsl", GL_VERTEX_SHADER );
         _fShader = createShader( "res/shaders/basic3d_lighting_fs_120.glsl", GL_FRAGMENT_SHADER );
         _program = createProgram( _vShader, _fShader );
 
         programs["basic3d_lighting"] = _program;
+        programObjs["basic3d_lighting"] = new LShaderLighting( _program );
+
+        _vShader = createShader( "res/shaders/basic3d_textured_vs_120.glsl", GL_VERTEX_SHADER );
+        _fShader = createShader( "res/shaders/basic3d_textured_fs_120.glsl", GL_FRAGMENT_SHADER );
+        _program = createProgram( _vShader, _fShader );
+
+        programs["basic3d_textured"] = _program;
+        programObjs["basic3d_textured"] = new LShaderBasic3d( _program );
+
+        _vShader = createShader( "res/shaders/basic3d_lighting_textured_vs_120.glsl", GL_VERTEX_SHADER );
+        _fShader = createShader( "res/shaders/basic3d_lighting_textured_fs_120.glsl", GL_FRAGMENT_SHADER );
+        _program = createProgram( _vShader, _fShader );
+
+        programs["basic3d_lighting_textured"] = _program;
+        programObjs["basic3d_lighting_textured"] = new LShaderLighting( _program );
 
         _vShader = createShader( "res/shaders/debug_shader3d_vs_120.glsl", GL_VERTEX_SHADER );
         _fShader = createShader( "res/shaders/debug_shader3d_fs_120.glsl", GL_FRAGMENT_SHADER );
         _program = createProgram( _vShader, _fShader );
 
         programs["debug3d"] = _program;
+        programObjs["debug3d"] = new LShader( _program );
+
 #endif
     }
 

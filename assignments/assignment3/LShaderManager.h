@@ -3,6 +3,7 @@
 #pragma once
 
 #include "../Common.h"
+#include "LShader.h"
 
 #include <GL/glew.h>
 #include <iostream>
@@ -26,6 +27,7 @@ namespace engine
         public :
 
         map< string, GLuint > programs;
+        map< string, LShader* > programObjs;
         GLuint currentShader;
 
         static LShaderManager* INSTANCE;

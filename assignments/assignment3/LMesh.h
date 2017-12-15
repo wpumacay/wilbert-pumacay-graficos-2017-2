@@ -53,11 +53,13 @@ namespace engine
 
         void setMaterial( LMaterial* pMaterial );
         LMaterial* getMaterial() const { return m_material; }
+
+        void setTexture( LTexture* pTexture );
+
         LVertexArray* getVertexArray() const { return m_vertexArray; }
         LIndexBuffer* getIndexBuffer() const { return m_indexBuffer; }
 
-        void enableLighting() { m_material->enableLighting(); }
-        void disableLighting() { m_material->disableLighting(); }
+        bool isTextured() override;
 
         void render() override;
     };

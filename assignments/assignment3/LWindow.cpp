@@ -91,6 +91,10 @@ namespace engine
             m_initialized = false;
             return;
         }
+        else
+        {
+            cout << "glew initializeed correctly" << endl;
+        }
 
         glutDisplayFunc( LWindow::onDisplayCallback );
         glutIdleFunc( LWindow::onIdleCallback );

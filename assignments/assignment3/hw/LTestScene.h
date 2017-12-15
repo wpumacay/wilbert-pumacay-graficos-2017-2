@@ -10,6 +10,7 @@
 #include "../LLightPoint.h"
 #include "../LLightSpot.h"
 #include "../LFog.h"
+#include "../LTexture.h"
 #include "../../Config.h"
 #include "LBallEntity.h"
 
@@ -19,6 +20,41 @@ using namespace engine;
 namespace hw
 {
 
+    struct LPixel
+    {
+        u8 r;
+        u8 g;
+        u8 b;
+        u8 a;
+    };
+
+    struct LImage
+    {
+        int width;
+        int height;
+
+        LPixel* buffer;
+
+        LImage()
+        {
+            width = 0;
+            height = 0;
+            buffer = NULL;
+        }
+
+        LImage( int width, int height )
+        {
+            this->width = width;
+            this->height = height;
+
+            buffer = new LPixel[ width * height ];
+        }
+
+        ~LImage()
+        {
+            delete buffer;
+        }
+    };
 
     class LTestScene : public LScene
     {
@@ -29,6 +65,7 @@ namespace hw
         LLightPoint* m_mainPointLight;
         LLightSpot* m_mainSpotLight;
 
+        LImage m_checkerboardImage;
 
         public :
 
@@ -62,7 +99,7 @@ namespace hw
                                                 LVec3( 1.0f, 1.0f, 1.0f ),
                                                 0, LVec3( -14.0f, 12.0f, -3.0f ),
                                                 2.0f, 0.01f, 0.001f );
-            m_mainPointLight->active = 1;
+            m_mainPointLight->isActive = 1;
             addLight( m_mainPointLight );
             
             m_mainSpotLight = new LLightSpot( LVec3( 0.0f, 0.0f, 0.0f ),
@@ -71,7 +108,7 @@ namespace hw
                                               0, LVec3( -14.0f, 12.0f, -3.0f ),
                                               LVec3::normalize( LVec3( -6.0f, 0.0f, -4.5f ) - LVec3( -14.0f, 12.0f, -3.0f ) ),
                                               2.0f, 0.01f, 0.001f, 20.0f, 60.0f );
-            m_mainSpotLight->active = 0;
+            m_mainSpotLight->isActive = 0;
             addLight( m_mainSpotLight );
             
             m_projMatrix = glm::perspective( glm::radians( 45.0f ),
@@ -114,6 +151,14 @@ namespace hw
 
             addFog( _fog );
 
+            createCheckerboardImage();
+
+            //LTexture* _texture = new LTexture();
+            //_texture->setData( ( u8* ) m_checkerboardImage.buffer, 
+            //                   GL_RGBA,
+            //                   m_checkerboardImage.width,
+            //                   m_checkerboardImage.height,
+            //                   0 );
         }
 
         LBallEntity* getBall()
@@ -124,12 +169,12 @@ namespace hw
 
         void setMainSpotLightMode( int active )
         {
-            m_mainSpotLight->active = active;
+            m_mainSpotLight->isActive = active;
         }
 
         void setMainPointLightMode( int active )
         {
-            m_mainPointLight->active = active;
+            m_mainPointLight->isActive = active;
         }
 
         void increaseCamera( float dx, float dy, float dz )
@@ -176,6 +221,37 @@ namespace hw
             }
 
             m_fog->type = type;
+        }
+
+        void createCheckerboardImage()
+        {
+            int _w = 64;
+            int _h = 64;
+
+            m_checkerboardImage = LImage( _w, _h );
+
+            // create image
+
+            for ( int i = 0; i < _h; i++ )
+            {
+                for ( int j = 0; j < _w; j++ )
+                {
+                    if ( ( i & 0x8 == 0 ) ^ ( j & 0x8 == 0 ) )
+                    {
+                        m_checkerboardImage.buffer[ j + i * _w ].r = 255;
+                        m_checkerboardImage.buffer[ j + i * _w ].g = 255;
+                        m_checkerboardImage.buffer[ j + i * _w ].b = 255;
+                    }
+                    else
+                    {
+                        m_checkerboardImage.buffer[ j + i * _w ].r = 0;
+                        m_checkerboardImage.buffer[ j + i * _w ].g = 150;
+                        m_checkerboardImage.buffer[ j + i * _w ].b = 0;
+                    }
+                    m_checkerboardImage.buffer[ j + i * _w ].a = 255;
+                }
+            }
+
         }
 
     };

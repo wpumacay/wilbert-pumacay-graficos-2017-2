@@ -1,4 +1,5 @@
 
+#pragma once
 
 #include "LILight.h"
 
@@ -8,31 +9,42 @@ namespace engine
     class LLightPoint : public LILight
     {
 
-        private :
-
-        LVec3 m_position;
-
-        float m_attenuation_const;
-        float m_attenuation_linear;
-        float m_attenuation_quadratic;
-
         public :
 
-        static int s_count;
+        LVec3 position;
 
-        LLightPoint( const LVec3& ambient,
+        float attenuation_constant;
+        float attenuation_linear;
+        float attenuation_quadratic;
+
+        LLightPoint( const LVec3& ambient, 
                      const LVec3& diffuse,
-                     const LVec3& specular,
-                     int lIndx,
+                     const LVec3& specular, 
+                     int lIndx, 
                      const LVec3& position,
-                     float attenuation_const,
+                     float attenuation_constant, 
                      float attenuation_linear,
-                     float attenuation_quadratic );
+                     float attenuation_quadratic )
+            : LILight( ambient, diffuse, specular, lIndx )
+        {
+            this->position = position;
 
-        ~LLightPoint();
+            this->attenuation_constant  = attenuation_constant;
+            this->attenuation_linear    = attenuation_linear;
+            this->attenuation_quadratic = attenuation_quadratic;
 
-        void bind() override;
-        void unbind() override;
+            m_type = light::TYPE_POSITIONAL;
+        }
+
+        ~LLightPoint()
+        {
+
+        }
+
+        static light::_light getStaticType()
+        {
+            return light::TYPE_POSITIONAL;
+        }
 
     };
 

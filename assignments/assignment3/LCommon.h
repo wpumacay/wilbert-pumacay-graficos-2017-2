@@ -22,6 +22,8 @@ using namespace std;
 namespace engine
 {
 
+    typedef unsigned char u8;
+
     struct LVec3
     {
         GLfloat x;
@@ -158,6 +160,24 @@ namespace engine
         void dump()
         {
             cout << "i1: " << buff[0] << " - i2: " << buff[1] << " - i3: " << buff[2] << endl;
+        }
+    };
+
+    struct LVec2
+    {
+        GLfloat x;
+        GLfloat y;
+
+        LVec2()
+        {
+            this->x = 0.0f;
+            this->y = 0.0f;
+        }
+
+        LVec2( GLfloat x, GLfloat y )
+        {
+            this->x = x;
+            this->y = y;
         }
     };
 

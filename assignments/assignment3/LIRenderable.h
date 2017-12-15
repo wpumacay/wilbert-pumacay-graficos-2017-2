@@ -14,8 +14,7 @@ namespace engine
 
         virtual void render() = 0;
 
-        virtual void enableLighting() = 0;
-        virtual void disableLighting() = 0;
+        virtual bool isTextured() { return false; }
     };
 
 }

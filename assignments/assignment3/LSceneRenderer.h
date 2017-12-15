@@ -4,8 +4,11 @@
 
 #include "LIRenderer.h"
 #include "LScene.h"
+#include "LMesh.h"
 
 using namespace std;
+
+#define DEFAULT_GLOBAL_LIGHT LVec3( 1.0f, 1.0f, 1.0f )
 
 namespace engine
 {
@@ -16,17 +19,14 @@ namespace engine
         private :
 
         bool m_lightingEnabled;
-        
-        GLuint m_uniformProj;
-        GLuint m_uniformModel;
-        GLuint m_uniformView;
 
-        GLuint m_uniformNumDirectionalLights;
-        GLuint m_uniformNumPointLights;
-        GLuint m_uniformNumSpotLights;
+        LVec3 m_globalLight;
 
-        GLuint m_uniformViewPos;
-        GLuint m_uniformGlobalLight;
+        vector<LMesh*> m_nonTexturedRenderables;
+        vector<LMesh*> m_texturedRenderables;
+
+        void _renderTextured( LScene* pScene );
+        void _renderNonTextured( LScene* pScene );
 
         public :
 
@@ -34,9 +34,8 @@ namespace engine
         LSceneRenderer();
         ~LSceneRenderer();
 
-        void enableLighting();
-        void disableLighting();
-
+        void enableLighting() { m_lightingEnabled = true; }
+        void disableLighting() { m_lightingEnabled = false; }
 
         void renderScene( LScene* pScene ) override;
         void render( LIRenderable* pRenderable ) override;

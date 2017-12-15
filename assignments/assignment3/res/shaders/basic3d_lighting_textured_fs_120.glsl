@@ -87,7 +87,11 @@ struct LFog
 
 uniform LFog u_fog = LFog( 0, vec4( 0.7, 0.7, 0.7, 0.5 ),
                            0.0, 18.0, 1.5, 0 );
+uniform sampler2D u_matTex;
+
 varying float vVisibility;
+
+varying vec2 vTexCoord;
 
 vec3 computeDirectionalContribution( LLightDirectional light, vec3 normal, vec3 viewDir );
 vec3 computePointContribution( LLightPoint light, vec3 normal, vec3 fragPos, vec3 viewDir );

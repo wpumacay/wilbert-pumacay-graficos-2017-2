@@ -7,35 +7,59 @@
 namespace engine
 {
 
+    namespace light
+    {
+        enum _light
+        {
+            TYPE_BASE,
+            TYPE_DIRECTIONAL,
+            TYPE_POSITIONAL,
+            TYPE_SPOT
+        };
+    }
+
 
     class LILight
     {
 
         protected :
 
-        LVec3 m_ambient;
-        LVec3 m_diffuse;
-        LVec3 m_specular;
-
         int m_indx;
-
-        string m_type;
+        light::_light m_type;
 
         public :
 
-        int active;
+        LVec3 ambient;
+        LVec3 diffuse;
+        LVec3 specular;
+
+        int isActive;
 
         LILight( const LVec3& ambient,
                  const LVec3& diffuse,
                  const LVec3& specular,
-                 int lIndx );
+                 int lIndx )
+        {
+            this->ambient = ambient;
+            this->diffuse = diffuse;
+            this->specular = specular;
+            this->isActive = 1;
 
-        ~LILight();
+            m_indx = lIndx;
+        }
 
-        string getType() { return m_type; }
+        ~LILight()
+        {
+            
+        }
 
-        virtual void bind() = 0;
-        virtual void unbind() = 0;
+        static light::_light getStaticType()
+        {
+            return light::TYPE_BASE;
+        }
+
+        light::_light getType() { return m_type; }
+        int getIndx() { return m_indx; }
 
     };
 

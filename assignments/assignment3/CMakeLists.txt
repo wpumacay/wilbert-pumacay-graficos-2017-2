@@ -3,12 +3,12 @@
 
 if( WIN32 )
 
-    message( "Building assignment 1 - windows" )
+    message( "Building assignment 3 - windows" )
     message( "Sorry, haven't configured it yet" )
 
 elseif( UNIX AND NOT APPLE )
 
-    message( "Building assignment 2 - linux" )
+    message( "Building assignment 3 - linux" )
     add_executable( assignment3.out
                     main.cpp 
                     LCommon.cpp
@@ -16,17 +16,14 @@ elseif( UNIX AND NOT APPLE )
                     LEntity.cpp
                     LFixedCamera3d.cpp
                     LICamera.cpp
-                    LILight.cpp
                     LIndexBuffer.cpp
-                    LLightDirectional.cpp
-                    LLightPoint.cpp
-                    LLightSpot.cpp
-                    LMaterial.cpp
+                    LTexture.cpp
                     LMeshBuilder.cpp
                     LMeshComponent.cpp
                     LMesh.cpp
                     LScene.cpp
                     LSceneRenderer.cpp
+                    LShader.cpp
                     LShaderManager.cpp
                     LVertexArray.cpp
                     LVertexBuffer.cpp
@@ -57,7 +54,7 @@ elseif( UNIX AND NOT APPLE )
 
 elseif( APPLE )
 
-    message( "Building assignment 2 - macOS" )
+    message( "Building assignment 3 - macOS" )
     add_executable( assignment3.out
                     main.cpp 
                     LCommon.cpp
@@ -67,15 +64,13 @@ elseif( APPLE )
                     LICamera.cpp
                     LILight.cpp
                     LIndexBuffer.cpp
-                    LLightDirectional.cpp
-                    LLightPoint.cpp
-                    LLightSpot.cpp
-                    LMaterial.cpp
+                    LTexture.cpp
                     LMeshBuilder.cpp
                     LMeshComponent.cpp
                     LMesh.cpp
                     LScene.cpp
                     LSceneRenderer.cpp
+                    LShader.cpp
                     LShaderManager.cpp
                     LVertexArray.cpp
                     LVertexBuffer.cpp

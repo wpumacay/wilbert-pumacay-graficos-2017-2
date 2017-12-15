@@ -7,6 +7,9 @@
 #include "LICamera.h"
 #include "LILight.h"
 #include "LScene.h"
+#include "LShader.h"
+#include "LShaderBasic3d.h"
+#include "LShaderLighting.h"
 
 using namespace std;
 
@@ -17,9 +20,6 @@ namespace engine
 
     class LIRenderer
     {
-        protected :
-
-        GLuint m_shader;
 
         public :
 
