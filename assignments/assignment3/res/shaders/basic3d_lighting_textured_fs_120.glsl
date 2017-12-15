@@ -147,7 +147,7 @@ void main()
                                             _normal, vFragPos, _viewDir );
     }
 
-
+    _result = vec3( texture2D( u_matTex, vTexCoord ) ) * _result;
     gl_FragColor = vec4( _result, 1.0 );
     gl_FragColor.rgb = mix( u_fog.color, gl_FragColor, vVisibility ).rgb;
 }

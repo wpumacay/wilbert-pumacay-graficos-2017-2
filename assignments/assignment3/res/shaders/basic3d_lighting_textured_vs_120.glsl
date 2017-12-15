@@ -52,13 +52,11 @@ void main()
         }
         else if ( u_fog.type == FOG_TYPE_EXP )
         {
-            //vVisibility = exp( -( _distToCamera - u_fog.start ) * u_fog.density );
-            vVisibility = 1 - exp( -_distToCamera * u_fog.density );
+            vVisibility = exp( -( _distToCamera - u_fog.start ) * u_fog.density );
         }
         else if ( u_fog.type == FOG_TYPE_EXP_SQUARE )
         {
-            //vVisibility = exp( -pow( ( _distToCamera - u_fog.start ) * u_fog.density, 2 ) );
-            vVisibility = 1 - exp( -pow( _distToCamera * u_fog.density, 2 ) );
+            vVisibility = exp( -pow( ( _distToCamera - u_fog.start ) * u_fog.density, 2 ) );
         }
 
         vVisibility = clamp( vVisibility, 0.0f, 1.0f );

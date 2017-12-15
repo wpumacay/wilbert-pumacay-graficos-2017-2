@@ -27,6 +27,7 @@ namespace engine
 
         LVertexBuffer* m_vBuffer;
         LVertexBuffer* m_nBuffer;
+        LVertexBuffer* m_tBuffer;
         vector<LVec3> m_vertices;
         vector<LVec3> m_normals;
         vector<LInd3> m_indices;
@@ -54,7 +55,7 @@ namespace engine
         void setMaterial( LMaterial* pMaterial );
         LMaterial* getMaterial() const { return m_material; }
 
-        void setTexture( LTexture* pTexture );
+        void setTexture( LTexture* pTexture, const vector<LVec2>& texCoord );
 
         LVertexArray* getVertexArray() const { return m_vertexArray; }
         LIndexBuffer* getIndexBuffer() const { return m_indexBuffer; }

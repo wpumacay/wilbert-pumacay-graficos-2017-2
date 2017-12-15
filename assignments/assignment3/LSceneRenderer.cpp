@@ -54,7 +54,7 @@ namespace engine
 
     void LSceneRenderer::_renderTextured( LScene* pScene )
     {
-        if ( m_lightingEnabled )
+        if ( !m_lightingEnabled )
         {
             LShaderBasic3d* _shader = ( LShaderBasic3d* ) LShaderManager::INSTANCE->programObjs["basic3d_textured"];
 
@@ -67,6 +67,7 @@ namespace engine
             {
                 _shader->setModelMatrix( _mesh->getModelMatrix() );
                 _shader->setPlainColor( _mesh->getMaterial()->plainColor );
+                _mesh->getMaterial()->getTexture()->bind();
                 _mesh->render();
             }
 
@@ -122,6 +123,7 @@ namespace engine
             {
                 _shader->setModelMatrix( _mesh->getModelMatrix() );
                 _shader->setMaterial( _mesh->getMaterial() );
+                _mesh->getMaterial()->getTexture()->bind();
                 _mesh->render();
             }
 
@@ -132,7 +134,7 @@ namespace engine
 
     void LSceneRenderer::_renderNonTextured( LScene* pScene )
     {
-        if ( m_lightingEnabled )
+        if ( !m_lightingEnabled )
         {
             LShaderBasic3d* _shader = ( LShaderBasic3d* ) LShaderManager::INSTANCE->programObjs["basic3d"];
 
@@ -200,7 +202,6 @@ namespace engine
             {
                 _shader->setModelMatrix( _mesh->getModelMatrix() );
                 _shader->setMaterial( _mesh->getMaterial() );
-                _mesh->getMaterial()->getTexture()->bind();
                 _mesh->render();
             }
 

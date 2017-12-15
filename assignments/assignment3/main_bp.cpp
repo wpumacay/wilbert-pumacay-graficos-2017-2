@@ -273,10 +273,10 @@ void onKeyCallback( int key, int action )
 int main()
 {
     g_window = new engine::LWindow();
-    g_window->registerKeyCallback( onKeyCallback );
+    //g_window->registerKeyCallback( onKeyCallback );
 
 #ifdef GLUT_SUPPORT_ENABLED
-    g_window->registerMouseCallback( onMouseCallback );
+    //g_window->registerMouseCallback( onMouseCallback );
     g_window->registerDisplayCallback( onDisplayCallback );
 #endif
 
@@ -284,6 +284,8 @@ int main()
 
     // Initialize shader manager
     engine::LShaderManager::create();
+    
+    //g_renderer->enableLighting();
 
     // TODO: Abstract the debug primitives into a separate layer :(
     engine::LVertexBuffer* _xAxisBuff = new engine::LVertexBuffer();
@@ -320,8 +322,6 @@ int main()
     g_zAxis->addBuffer( _zAxisBuff, 0 );
 
     g_renderer = new engine::LSceneRenderer();
-    g_renderer->enableLighting();
-    
     g_scene = new hw::LTestScene();
 
 #ifdef GLUT_SUPPORT_ENABLED

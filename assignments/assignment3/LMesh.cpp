@@ -26,6 +26,8 @@ namespace engine
         m_nBuffer->setData( sizeof( LVec3 ) * normals.size(),
                             3, (GLfloat*) normals.data() );
 
+        m_tBuffer = NULL;// no textures by default
+
         m_vertexArray = new LVertexArray();
         m_vertexArray->addBuffer( m_vBuffer, 0 );
         m_vertexArray->addBuffer( m_nBuffer, 1 );
@@ -48,6 +50,7 @@ namespace engine
     {
         m_vBuffer = NULL;
         m_nBuffer = NULL;
+        m_tBuffer = NULL;
 
         delete m_vertexArray;
         delete m_indexBuffer;
@@ -71,9 +74,15 @@ namespace engine
         return _model;
     }
 
-    void LMesh::setTexture( LTexture* pTexture )
+    void LMesh::setTexture( LTexture* pTexture, const vector<LVec2>& texCoord )
     {
         m_material->setTexture( pTexture );
+
+        m_tBuffer = new LVertexBuffer();
+        m_tBuffer->setData( sizeof( LVec2 ) * texCoord.size(),
+                            2, ( GLfloat* ) texCoord.data() );
+
+        m_vertexArray->addBuffer( m_tBuffer, 2 );
     }
 
     bool LMesh::isTextured()

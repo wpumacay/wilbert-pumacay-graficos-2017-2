@@ -52,7 +52,7 @@ namespace hw
 
         ~LImage()
         {
-            delete buffer;
+            
         }
     };
 
@@ -153,12 +153,20 @@ namespace hw
 
             createCheckerboardImage();
 
-            //LTexture* _texture = new LTexture();
-            //_texture->setData( ( u8* ) m_checkerboardImage.buffer, 
-            //                   GL_RGBA,
-            //                   m_checkerboardImage.width,
-            //                   m_checkerboardImage.height,
-            //                   0 );
+            LTexture* _texture = new LTexture();
+            _texture->setData( ( u8* ) m_checkerboardImage.buffer, 
+                               GL_RGBA,
+                               m_checkerboardImage.width,
+                               m_checkerboardImage.height,
+                               0 );
+
+            vector<LVec2> _texCoord;
+            _texCoord.push_back( LVec2( 0.0f, 0.0f ) );
+            _texCoord.push_back( LVec2( 0.0f, 1.25f ) );
+            _texCoord.push_back( LVec2( 1.5f, 1.25f ) );
+            _texCoord.push_back( LVec2( 1.5f, 0.0f ) );
+
+            _planeMesh->setTexture( _texture, _texCoord );
         }
 
         LBallEntity* getBall()
@@ -236,7 +244,7 @@ namespace hw
             {
                 for ( int j = 0; j < _w; j++ )
                 {
-                    if ( ( i & 0x8 == 0 ) ^ ( j & 0x8 == 0 ) )
+                    if ( ( ( i & 0x8 ) == 0 ) ^ ( ( j & 0x8 ) == 0 ) )
                     {
                         m_checkerboardImage.buffer[ j + i * _w ].r = 255;
                         m_checkerboardImage.buffer[ j + i * _w ].g = 255;
