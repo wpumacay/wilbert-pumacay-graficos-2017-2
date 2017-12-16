@@ -83,3 +83,4 @@ Modern opengl usage needs glfw as windowing system for macOS, so the library was
 
 * [Assignment 1] ( https://github.com/wpumacay/wilbert-pumacay-graficos-2017-2/tree/master/assignments/assignment1 )
 * [Assignment 2] ( https://github.com/wpumacay/wilbert-pumacay-graficos-2017-2/tree/master/assignments/assignment2 )
+* [Assignment 3] ( https://github.com/wpumacay/wilbert-pumacay-graficos-2017-2/tree/master/assignments/assignment3 )
