@@ -62,7 +62,6 @@ elseif( APPLE )
                     LEntity.cpp
                     LFixedCamera3d.cpp
                     LICamera.cpp
-                    LILight.cpp
                     LIndexBuffer.cpp
                     LTexture.cpp
                     LMeshBuilder.cpp

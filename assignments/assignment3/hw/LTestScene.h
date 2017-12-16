@@ -61,6 +61,7 @@ namespace hw
         private :
 
         LBallEntity* m_ballEntity;
+        LEntity* m_planeEntity;
 
         LLightPoint* m_mainPointLight;
         LLightSpot* m_mainSpotLight;
@@ -126,13 +127,13 @@ namespace hw
 
             _planeMesh->setMaterial( _planeMaterial );
 
-            LEntity* _planeEntity = new LEntity( _planeMesh );
-            _planeEntity->pos = LVec3( 0.0f, 0.0f, 2.0f );
+            m_planeEntity = new LEntity( _planeMesh );
+            m_planeEntity->pos = LVec3( 0.0f, 0.0f, 2.0f );
 
             m_ballEntity = new LBallEntity( LVec3( 3.0f, 1.0f, 5.0f ) );
 
             addEntity( m_ballEntity );
-            addEntity( _planeEntity );
+            addEntity( m_planeEntity );
 
             LFog* _fog = new LFog( FOG_TYPE_LINEAR, 
                                    LVec4( 0.7, 0.7, 0.7, 0.5 ),
@@ -229,6 +230,18 @@ namespace hw
             }
 
             m_fog->type = type;
+        }
+
+        void disableTexture()
+        {
+            auto _mesh = m_planeEntity->getComponent<LMeshComponent>()->getMesh();
+            _mesh->getMaterial()->getTexture()->enabled = false;
+        }
+
+        void enableTexture()
+        {
+            auto _mesh = m_planeEntity->getComponent<LMeshComponent>()->getMesh();
+            _mesh->getMaterial()->getTexture()->enabled = true;
         }
 
         void createCheckerboardImage()

@@ -128,13 +128,25 @@ void onSubMenuFog( int optionId )
     }
 }
 
+void onSubMenuTexture( int optionId )
+{
+    if ( optionId == 0 )
+    {
+        g_scene->disableTexture();
+    }
+    else
+    {
+        g_scene->enableTexture();
+    }
+}
+
 void onMainMenuCallback( int optionId )
 {
     if ( optionId == 0 )
     {
         _onDefaultViewPoint();
     }
-    else if ( optionId == 5 )
+    else if ( optionId == 7 )
     {
         exit( 0 );
     }
@@ -342,12 +354,16 @@ int main()
     auto _smWireframe = glutCreateMenu( onSubMenuWireframe );
     glutAddMenuEntry( "No", 0 );
     glutAddMenuEntry( "Yes", 1 );
-
+    // Fog submenu
     auto _smFog = glutCreateMenu( onSubMenuFog );
     glutAddMenuEntry( "No fog", 0 );
     glutAddMenuEntry( "Linear", 1 );
     glutAddMenuEntry( "Exponential", 2 );
     glutAddMenuEntry( "Exponential Square", 3 );
+    // texture submenu
+    auto _smTexture = glutCreateMenu( onSubMenuTexture );
+    glutAddMenuEntry( "No", 0 );
+    glutAddMenuEntry( "Yes", 1 );
 
     glutCreateMenu( onMainMenuCallback );
     glutAddMenuEntry( "Default View Point", 0 );
@@ -356,7 +372,8 @@ int main()
     glutAddSubMenu( "Lighting", _smLighting );
     glutAddSubMenu( "Wireframe", _smWireframe );
     glutAddSubMenu( "Fog", _smFog );
-    glutAddMenuEntry( "Quit", 5 );
+    glutAddSubMenu( "Texture", _smTexture );
+    glutAddMenuEntry( "Quit", 7 );
     glutAttachMenu( GLUT_LEFT_BUTTON );
 
     g_window->loop();

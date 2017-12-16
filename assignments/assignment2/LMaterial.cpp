@@ -43,6 +43,7 @@ namespace engine
     void LMaterial::bind()
     {
         GLuint _currentShader = LShaderManager::INSTANCE->currentShader;
+
         if ( !m_lightingEnabled )
         {
             GLuint u_color = glGetUniformLocation( _currentShader, "u_color" );

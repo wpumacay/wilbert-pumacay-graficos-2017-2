@@ -21,13 +21,13 @@ namespace engine
 
     void LTexture::setData( u8* pData, GLuint type, int width, int height, GLuint textureIndx )
     {
-        cout << "width: " << width << endl;
-        cout << "height: " << height << endl;
-        cout << "textureIndx: " << textureIndx << endl;
-        if ( pData == NULL )
-        {
-            cout << "??" << endl;
-        }
+        //cout << "width: " << width << endl;
+        //cout << "height: " << height << endl;
+        //cout << "textureIndx: " << textureIndx << endl;
+        //if ( pData == NULL )
+        //{
+        //    cout << "??" << endl;
+        //}
 
         m_width = width;
         m_height = height;
