@@ -161,12 +161,18 @@ namespace miniengine
     {
         m_lastX = x;
         m_lastY = y;
+
+        cout << "lastX: " << m_lastX << endl;
+        cout << "lastY: " << m_lastY << endl;
     }
 
     void LCamera3D::onMouseUp( float x, float y )
     {
         m_lastX = x;
         m_lastY = y;
+
+        cout << "lastX: " << m_lastX << endl;
+        cout << "lastY: " << m_lastY << endl;
     }
 
     void LCamera3D::onMouseMove( double x, double y )
@@ -188,11 +194,20 @@ namespace miniengine
         float _xOff = x - m_lastX;
         float _yOff = m_lastY - y;
 
+        _xOff = ( _xOff > CAM_MAX_DELTA ? CAM_MAX_DELTA : ( _xOff < -CAM_MAX_DELTA ? -CAM_MAX_DELTA : _xOff ) );
+        _yOff = ( _yOff > CAM_MAX_DELTA ? CAM_MAX_DELTA : ( _yOff < -CAM_MAX_DELTA ? -CAM_MAX_DELTA : _yOff ) );
+
+        //cout << "_xOff: " << _xOff << endl;
+        //cout << "_yOff: " << _yOff << endl;
+
         m_lastX = x;
         m_lastY = y;
 
         _xOff *= sensitivity;
         _yOff *= sensitivity;
+
+        cout << "lastX: " << m_lastX << endl;
+        cout << "lastY: " << m_lastY << endl;
 
         euler.y += _yOff;
         euler.z += _xOff;

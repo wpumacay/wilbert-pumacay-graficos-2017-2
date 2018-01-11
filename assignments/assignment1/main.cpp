@@ -266,7 +266,19 @@ class Hw1App : public engine::core::LBaseApp
     void onMouseButtonCallback( int pButton, int pAction, 
                                 int x, int y ) override
     {
-        
+        if ( m_scene == NULL )
+        {
+            return;
+        }
+
+        if ( pAction == 1 )
+        {
+            m_scene->onMouseDown( (double) x, (double) y );
+        }
+        else if ( pAction == 0 )
+        {
+            m_scene->onMouseUp( (double) x, (double) y );
+        }
     }
 
     void onCursorCallback( int x, int y ) override

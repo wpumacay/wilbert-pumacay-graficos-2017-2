@@ -46,6 +46,11 @@ namespace engine
         {
             _entity->update( dt );
         }
+
+        for ( LICamera* _camera : m_cameras )
+        {
+            _camera->update( dt );
+        }
     }
 
     void LScene::setShadingMode( bool useSmoothShading )

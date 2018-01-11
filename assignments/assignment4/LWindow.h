@@ -35,6 +35,7 @@ namespace engine
 
         FnPtr_keyboard_callback m_keyCallback;
         FnPtr_mouse_callback m_mouseCallback;
+        FnPtr_mousemove_callback m_mouseMoveCallback;
 #ifndef GLFW_SUPPORT_ENABLED
         FnPtr_display_callback m_displayCallback;
         FnPtr_idle_callback m_idleCallback;
@@ -56,15 +57,19 @@ namespace engine
 
         static void onMouseCallback( GLFWwindow* pWindow, int button, 
                                      int action, int mode );
+        static void onMouseMoveCallback( GLFWwindow* pWindow, double x, double y );
 #else
-        static void onKeyCallback( unsigned char key, int x, int y );
+        static void onKeyDownCallback( unsigned char key, int x, int y );
+        static void onKeyUpCallback( unsigned char key, int x, int y );
         static void onMouseCallback( int button, int action, int x, int y );
+        static void onMouseMoveCallback( int x, int y );
         static void onDisplayCallback();
         static void onIdleCallback();
 #endif
 
         void registerKeyCallback( FnPtr_keyboard_callback callback );
         void registerMouseCallback( FnPtr_mouse_callback callback );
+        void registerMouseMoveCallback( FnPtr_mousemove_callback callback );
 #ifdef GLUT_SUPPORT_ENABLED        
         void registerDisplayCallback( FnPtr_display_callback callback );
         void registerIdleCallback( FnPtr_idle_callback callback );

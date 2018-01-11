@@ -4,13 +4,13 @@
 
 #include "../Config.h"
 
-#define L_KEY_PRESS 1
-#define L_KEY_RELEASE 0
-
-#ifdef GLFW_SUPPORT_ENABLED
+#define L_PRESS 1
+#define L_RELEASE 0
 
 #define L_MAX_KEYS 1024
 #define L_MAX_BUTTONS 32
+
+#ifdef GLFW_SUPPORT_ENABLED
 
 #include <GLFW/glfw3.h>
 

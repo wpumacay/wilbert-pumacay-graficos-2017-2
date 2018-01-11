@@ -16,6 +16,7 @@
 #define CAM_DEFAULT_SENSITIVITY 0.1f
 #define CAM_DEFAULT_SPEED 2.5f
 
+#define CAM_MAX_DELTA 10
 
 namespace miniengine
 {

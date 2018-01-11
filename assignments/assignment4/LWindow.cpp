@@ -22,6 +22,7 @@ namespace engine
         LWindow::INSTANCE = this;
         m_keyCallback = NULL;
         m_mouseCallback = NULL;
+        m_mouseMoveCallback = NULL;
 
         glfwInit();
         glfwWindowHint( GLFW_CONTEXT_VERSION_MAJOR, APP_CONTEXT_VERSION_MAJOR );
@@ -53,6 +54,7 @@ namespace engine
 
         glfwSetKeyCallback( m_window, LWindow::onKeyCallback );
         glfwSetMouseButtonCallback( m_window, LWindow::onMouseCallback );
+        glfwSetCursorPosCallback( m_window, LWindow::onMouseMoveCallback );
 
         glfwGetFramebufferSize( m_window, &m_width, &m_height );
         glViewport( 0, 0, m_width, m_height );
@@ -100,7 +102,9 @@ namespace engine
         glutIdleFunc( LWindow::onIdleCallback );
 
         glutMouseFunc( LWindow::onMouseCallback );
-        glutKeyboardFunc( LWindow::onKeyCallback );
+        glutMotionFunc( LWindow::onMouseMoveCallback );
+        glutKeyboardFunc( LWindow::onKeyDownCallback );
+        glutKeyboardUpFunc( LWindow::onKeyUpCallback );
 
         glClearColor( CLEAR_COLOR );
         
@@ -154,15 +158,36 @@ namespace engine
 
         LWindow::INSTANCE->m_mouseCallback( button, action, _x, _y );
     }
+
+    void LWindow::onMouseMoveCallback( GLFWwindow* pWindow, double x, double y )
+    {
+        if ( LWindow::INSTANCE->m_mouseMoveCallback == NULL )
+        {
+            return;
+        }
+
+        LWindow::INSTANCE->m_mouseMoveCallback( (double)x, (double)y );
+    }
+
 #else
-    void LWindow::onKeyCallback( unsigned char key, int x, int y )
+    void LWindow::onKeyDownCallback( unsigned char key, int x, int y )
     {
         if ( LWindow::INSTANCE->m_keyCallback == NULL )
         {
             return;
         }
 
-        LWindow::INSTANCE->m_keyCallback( key, L_KEY_PRESS );
+        LWindow::INSTANCE->m_keyCallback( key, L_PRESS );
+    }
+
+    void LWindow::onKeyUpCallback( unsigned char key, int x, int y )
+    {
+        if ( LWindow::INSTANCE->m_keyCallback == NULL )
+        {
+            return;
+        }
+
+        LWindow::INSTANCE->m_keyCallback( key, L_RELEASE );
     }
 
     void LWindow::onMouseCallback( int button, int action, int x, int y )
@@ -173,6 +198,16 @@ namespace engine
         }
 
         LWindow::INSTANCE->m_mouseCallback( button, action, (double)x, (double)y );
+    }
+
+    void LWindow::onMouseMoveCallback( int x, int y )
+    {
+        if ( LWindow::INSTANCE->m_mouseCallback == NULL )
+        {
+            return;
+        }
+
+        LWindow::INSTANCE->m_mouseMoveCallback( (double)x, (double)y );
     }
 
     void LWindow::onDisplayCallback()
@@ -203,6 +238,12 @@ namespace engine
     {
         m_mouseCallback = callback;
     }
+
+    void LWindow::registerMouseMoveCallback( FnPtr_mousemove_callback callback )
+    {
+        m_mouseMoveCallback = callback;
+    }
+
 #ifdef GLUT_SUPPORT_ENABLED
     void LWindow::registerDisplayCallback( FnPtr_display_callback callback )
     {

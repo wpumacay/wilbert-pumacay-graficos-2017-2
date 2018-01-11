@@ -1,6 +1,7 @@
 
 
 #include "LWindow.h"
+#include "LInputHandler.h"
 #include "LShaderManager.h"
 #include "LSceneRenderer.h"
 #include "hw/LTestScene.h"
@@ -73,23 +74,11 @@ void onDisplayCallback()
 
 #endif
 
-void onKeyCallback( int key, int action )
-{
-    if ( action == L_KEY_PRESS )
-    {
-        if ( key == L_KEY_X ) { g_scene->increaseCamera( 1.0f, 0.0f, 0.0f ); }
-        else if ( key == L_KEY_X_MAYUS ) { g_scene->increaseCamera( -1.0f, 0.0f, 0.0f ); }
-        else if ( key == L_KEY_Y ) { g_scene->increaseCamera( 0.0f, 1.0f, 0.0f ); }
-        else if ( key == L_KEY_Y_MAYUS ) { g_scene->increaseCamera( 0.0f, -1.0f, 0.0f ); }
-        else if ( key == L_KEY_Z ) { g_scene->increaseCamera( 0.0f, 0.0f, 1.0f ); }
-        else if ( key == L_KEY_Z_MAYUS ) { g_scene->increaseCamera( 0.0f, 0.0f, -1.0f ); }
-    }
-}
-
 int main()
 {
     g_window = new engine::LWindow();
-    g_window->registerKeyCallback( onKeyCallback );
+
+    engine::LInputHandler::create( g_window );
 
 #ifdef GLUT_SUPPORT_ENABLED
     g_window->registerDisplayCallback( onDisplayCallback );

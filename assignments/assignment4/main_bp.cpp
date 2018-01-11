@@ -192,7 +192,7 @@ void onDisplayCallback()
 
 void onKeyCallback( int key, int action )
 {
-    if ( action == L_KEY_PRESS )
+    if ( action == L_PRESS )
     {
         //cout << "key: " << key << endl;
         //cout << "action: " << action << endl;

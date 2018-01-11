@@ -33,6 +33,11 @@ namespace engine
 
         virtual glm::mat4 getViewMatrix() = 0;
 
+        virtual void update( float dt ) 
+        {
+            // Override this
+        }
+
     };
 
 

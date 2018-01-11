@@ -15,6 +15,8 @@ elseif( UNIX AND NOT APPLE )
                     LComponent.cpp
                     LEntity.cpp
                     LFixedCamera3d.cpp
+                    LFpsCamera.cpp
+                    LInputHandler.cpp
                     LICamera.cpp
                     LIndexBuffer.cpp
                     LTexture.cpp
@@ -63,6 +65,8 @@ elseif( APPLE )
                     LComponent.cpp
                     LEntity.cpp
                     LFixedCamera3d.cpp
+                    LFpsCamera.cpp
+                    LInputHandler.cpp
                     LICamera.cpp
                     LIndexBuffer.cpp
                     LTexture.cpp
