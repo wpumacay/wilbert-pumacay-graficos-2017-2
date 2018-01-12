@@ -9,13 +9,18 @@
 #include "LEntity.h"
 #include "LICamera.h"
 #include "LFog.h"
-#include "LTerrainPatch.h"
+#include "LTerrainGenerator.h"
 
 using namespace std;
+
+// TODO : Decouple the terrain rendering from the scene rendering
+// Maybe use unity-like way of using gameobjects -> onStart and entities ...
+// and make the terrain generator and some other stuff game objects
 
 namespace engine
 {
 
+    class LTerrainGenerator;
 
     class LScene
     {
@@ -26,13 +31,13 @@ namespace engine
         vector<LEntity*> m_entities;
         vector<LICamera*> m_cameras;
 
-        vector<LTerrainPatch*> m_terrainPatches;
-
         LICamera* m_currentCamera;
 
         glm::mat4 m_projMatrix;
 
         LFog* m_fog;
+
+        LTerrainGenerator* m_terrainGenerator;
 
         public :
 
@@ -52,8 +57,17 @@ namespace engine
             }
         }
 
-        void addTerrainPatch( LTerrainPatch* pTerrainPatch ) { m_terrainPatches.push_back( pTerrainPatch ); }
-        vector<LTerrainPatch*>& getTerrainPatches() { return m_terrainPatches; }
+        void addTerrainGenerator( LTerrainGenerator* pTerrainGenerator )
+        {
+            if ( m_terrainGenerator != NULL )
+            {
+                delete m_terrainGenerator;
+            }
+
+            m_terrainGenerator = pTerrainGenerator;
+        }
+
+        LTerrainGenerator* getTerrainGenerator() { return m_terrainGenerator; }
 
         glm::mat4 getProjMatrix() { return m_projMatrix; }
         LICamera* getCurrentCamera() { return m_currentCamera; }

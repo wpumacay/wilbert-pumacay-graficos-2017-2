@@ -67,7 +67,9 @@ namespace engine
 		{
 			return;
 		}
-
+#ifdef GLUT_SUPPORT_ENABLED        
+        key = _fix_mayus_letters_keys( key );
+#endif
 		LInputHandler::INSTANCE->m_keys[key] = action;
 	}
 
@@ -122,5 +124,24 @@ namespace engine
 		y = m_mouseY;
 	}
 
+    int LInputHandler::_fix_mayus_letters_keys( int keyLetter )
+    {
+        int key = keyLetter - 32;
+
+        if ( key == L_KEY_A || key == L_KEY_B || key == L_KEY_C ||
+             key == L_KEY_D || key == L_KEY_E || key == L_KEY_F ||
+             key == L_KEY_G || key == L_KEY_H || key == L_KEY_I ||
+             key == L_KEY_J || key == L_KEY_K || key == L_KEY_L ||
+             key == L_KEY_M || key == L_KEY_N || key == L_KEY_O ||
+             key == L_KEY_P || key == L_KEY_Q || key == L_KEY_R ||
+             key == L_KEY_S || key == L_KEY_T || key == L_KEY_U ||
+             key == L_KEY_V || key == L_KEY_W || key == L_KEY_X ||
+             key == L_KEY_Y || key == L_KEY_Z )
+        {
+            return key;
+        }
+
+        return keyLetter;
+    }
 
 }

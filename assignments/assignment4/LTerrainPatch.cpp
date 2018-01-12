@@ -7,10 +7,14 @@ namespace engine
 {
 
 
-	LTerrainPatch::LTerrainPatch( GLfloat patchWidth, GLfloat patchDepth,
+	LTerrainPatch::LTerrainPatch( float xp, float zp,
+								  GLfloat patchWidth, GLfloat patchDepth,
 								  int patchWidthDiv, int patchDepthDiv,
 								  LHeightmapGenerator* pGenerator )
 	{
+		this->pos.x = xp;
+		this->pos.z = zp;
+
 		m_patchWidth = patchWidth;
 		m_patchDepth = patchDepth;
 
@@ -34,6 +38,8 @@ namespace engine
 
 		m_terrainVao->addBuffer( m_terrainVertBuff, 0 );
 		m_terrainVao->addBuffer( m_terrainNormBuff, 1 );
+
+		m_isWireframe = true;
 	}
 
 	LTerrainPatch::~LTerrainPatch()
@@ -107,7 +113,7 @@ namespace engine
 
 		m_terrainVao->unbind();
 
-		if ( m_isWireframe )
+	 	if ( m_isWireframe )
 		{
 			glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
 		}

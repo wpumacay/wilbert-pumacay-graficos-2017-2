@@ -26,6 +26,7 @@ elseif( UNIX AND NOT APPLE )
                     LTerrainPatch.cpp
                     LMesh.cpp
                     LScene.cpp
+                    LTerrainGenerator.cpp
                     LSceneRenderer.cpp
                     LShader.cpp
                     LShaderManager.cpp
@@ -76,6 +77,7 @@ elseif( APPLE )
                     LTerrainPatch.cpp
                     LMesh.cpp
                     LScene.cpp
+                    LTerrainGenerator.cpp
                     LSceneRenderer.cpp
                     LShader.cpp
                     LShaderManager.cpp

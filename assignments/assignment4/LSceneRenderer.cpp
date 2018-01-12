@@ -62,6 +62,11 @@ namespace engine
 
     void LSceneRenderer::_renderTerrainPatches( LScene* pScene )
     {
+        if ( pScene->getTerrainGenerator() == NULL )
+        {
+            return;
+        }
+
         LShaderTerrainPatch* _shader = ( LShaderTerrainPatch* ) LShaderManager::INSTANCE->programObjs["terrain_patch"];
 
         _shader->bind();
@@ -70,7 +75,7 @@ namespace engine
         _shader->setProjectionMatrix( pScene->getProjMatrix() );
         _shader->setPlainColor( LVec3( 0.0f, 0.0f, 0.0f ) );
 
-        auto _terrainPatches = pScene->getTerrainPatches();
+        auto _terrainPatches = pScene->getTerrainGenerator()->getTerrainPatches();
 
         for ( LTerrainPatch* _terrainPatch : _terrainPatches )
         {

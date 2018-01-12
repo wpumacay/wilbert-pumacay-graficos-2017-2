@@ -42,7 +42,9 @@ namespace engine
 
 		LVec3 pos;
 
-		LTerrainPatch( GLfloat patchWidth, GLfloat patchDepth, int patchWidthDiv, int patchDepthDiv, LHeightmapGenerator* pGenerator = NULL );
+		LTerrainPatch( float xp, float zp,
+					   GLfloat patchWidth, GLfloat patchDepth, 
+					   int patchWidthDiv, int patchDepthDiv, LHeightmapGenerator* pGenerator = NULL );
 		~LTerrainPatch();
 
 		void resample( float patchX, float patchZ );

@@ -4,8 +4,6 @@
 #include "../LScene.h"
 #include "../LFixedCamera3d.h"
 #include "../LFpsCamera.h"
-#include "../LTerrainPatch.h"
-#include "../LHeightmapGenerator.h"
 #include "../../Config.h"
 
 using namespace std;
@@ -18,8 +16,6 @@ namespace hw
     {
         private :
 
-        LHeightmapGenerator* m_heightmapGenerator;
-
         public :
 
         LTestScene()
@@ -31,10 +27,7 @@ namespace hw
                                              ( float ) APP_WIDTH / APP_HEIGHT,
                                              0.1f, 100.0f );
 
-            m_heightmapGenerator = new LHeightmapGenerator();
-
-            auto _terrainPatch = new LTerrainPatch( 20, 20, 100, 100, m_heightmapGenerator );
-            addTerrainPatch( _terrainPatch );
+            addTerrainGenerator( new LTerrainGenerator( this ) );
         }
 
     };

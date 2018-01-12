@@ -13,6 +13,7 @@ namespace engine
     {
         m_currentCamera = NULL;
         m_fog = NULL;
+        m_terrainGenerator = NULL;
     }
 
     LScene::~LScene()
@@ -32,9 +33,16 @@ namespace engine
             delete _entity;
         }
 
-        for ( LTerrainPatch* _terrainPatch : m_terrainPatches )
+        if ( m_terrainGenerator != NULL )
         {
-            delete _terrainPatch;
+            delete m_terrainGenerator;
+            m_terrainGenerator = NULL;
+        }
+
+        if ( m_fog != NULL )
+        {
+            delete m_fog;
+            m_fog = NULL;
         }
 
         m_currentCamera = NULL;

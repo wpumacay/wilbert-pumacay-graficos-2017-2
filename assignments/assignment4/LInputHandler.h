@@ -21,6 +21,8 @@ namespace engine
 		float m_mouseX;
 		float m_mouseY;
 
+        static int _fix_mayus_letters_keys( int key );
+
 		public :
 
 		~LInputHandler();
