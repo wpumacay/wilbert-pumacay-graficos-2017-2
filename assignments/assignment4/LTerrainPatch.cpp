@@ -12,8 +12,10 @@ namespace engine
 								  int patchWidthDiv, int patchDepthDiv,
 								  LHeightmapGenerator* pGenerator )
 	{
-		this->pos.x = xp;
-		this->pos.z = zp;
+		// std::cout << "created new patch" << std::endl;
+
+		m_pos.x = xp;
+		m_pos.z = zp;
 
 		m_patchWidth = patchWidth;
 		m_patchDepth = patchDepth;
@@ -34,7 +36,7 @@ namespace engine
 
 		m_terrainVao = new LVertexArray();
 
-		resample( this->pos.x, this->pos.z );
+		resample( m_pos.x, m_pos.z );
 
 		m_terrainVao->addBuffer( m_terrainVertBuff, 0 );
 		m_terrainVao->addBuffer( m_terrainNormBuff, 1 );
@@ -55,6 +57,9 @@ namespace engine
 
 	void LTerrainPatch::resample( float patchX, float patchZ )
 	{
+		m_pos.x = patchX;
+		m_pos.z = patchZ;
+
 		// Create traingle grid again
 
 		float _dw = m_patchWidth / m_patchWidthDiv;
@@ -66,13 +71,13 @@ namespace engine
 			{
 				// Fill the vertices, normal
 
-				float _xg = this->pos.x + j * _dw - 0.5 * m_patchWidth;
-				float _zg = this->pos.z + i * _dd - 0.5 * m_patchDepth;
+				float _xg = m_pos.x + j * _dw - 0.5 * m_patchWidth;
+				float _zg = m_pos.z + i * _dd - 0.5 * m_patchDepth;
 
-				LVec3 _p0( _xg +   0, 1.5 * _getHeight( _xg +   0, _zg +   0 ), _zg +   0 );
-				LVec3 _p1( _xg +   0, 1.5 * _getHeight( _xg +   0, _zg + _dd ), _zg + _dd );
-				LVec3 _p2( _xg + _dw, 1.5 * _getHeight( _xg + _dw, _zg + _dd ), _zg + _dd );
-				LVec3 _p3( _xg + _dw, 1.5 * _getHeight( _xg + _dw, _zg +   0 ), _zg +   0 );
+				LVec3 _p0( _xg +   0, 2.5 * _getHeight( _xg +   0, _zg +   0 ), _zg +   0 );
+				LVec3 _p1( _xg +   0, 2.5 * _getHeight( _xg +   0, _zg + _dd ), _zg + _dd );
+				LVec3 _p2( _xg + _dw, 2.5 * _getHeight( _xg + _dw, _zg + _dd ), _zg + _dd );
+				LVec3 _p3( _xg + _dw, 2.5 * _getHeight( _xg + _dw, _zg +   0 ), _zg +   0 );
 
 				m_terrainVertices[ 6 * ( j + i * m_patchWidthDiv ) + 0 ] = _p0;
 				m_terrainVertices[ 6 * ( j + i * m_patchWidthDiv ) + 1 ] = _p1;

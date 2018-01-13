@@ -59,6 +59,11 @@ namespace engine
         {
             _camera->update( dt );
         }
+
+        if ( m_terrainGenerator != NULL )
+        {
+            m_terrainGenerator->update( dt );
+        }
     }
 
     void LScene::setShadingMode( bool useSmoothShading )

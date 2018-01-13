@@ -8,7 +8,7 @@
 #define CAM_DEFAULT_PITCH 0.0f
 #define CAM_DEFAULT_FOV 45.0f
 #define CAM_DEFAULT_SENSITIVITY 0.1f
-#define CAM_DEFAULT_SPEED 2.5f
+#define CAM_DEFAULT_SPEED 5.0f
 #define CAM_MAX_DELTA 20
 
 namespace engine

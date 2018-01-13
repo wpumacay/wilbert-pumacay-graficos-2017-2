@@ -38,9 +38,9 @@ namespace engine
 
 		float _getHeight( float x, float z );
 
-		public :
+		LVec3 m_pos;
 
-		LVec3 pos;
+		public :
 
 		LTerrainPatch( float xp, float zp,
 					   GLfloat patchWidth, GLfloat patchDepth, 
@@ -52,6 +52,8 @@ namespace engine
 		void enableWireframe() { m_isWireframe = true; }
 		void disableWireframe() { m_isWireframe = false; }
 		bool isWireframe() { return m_isWireframe; }
+
+		LVec3 getPosition(){ return m_pos; }
 
 		void render() override;
 
