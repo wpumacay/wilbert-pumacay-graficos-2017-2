@@ -3,6 +3,7 @@
 #include "LSceneRenderer.h"
 #include "LShaderManager.h"
 #include "LShaderTerrainPatch.h"
+#include "LShaderSkybox.h"
 #include "LEntity.h"
 #include "LMeshComponent.h"
 #include "LMesh.h"
@@ -58,6 +59,28 @@ namespace engine
         _renderTerrainPatches( pScene );
         _renderTextured( pScene );
         _renderNonTextured( pScene );
+
+        _renderSkybox( pScene );
+    }
+
+    void LSceneRenderer::_renderSkybox( LScene* pScene )
+    {
+        auto _skybox = pScene->getSkybox();
+
+        LShaderSkybox* _shader = ( LShaderSkybox* ) LShaderManager::INSTANCE->programObjs["basic3d_skybox"];
+
+        glDepthFunc( GL_LEQUAL );
+
+        _shader->bind();
+
+        _shader->setViewMatrix( pScene->getCurrentCamera()->getViewMatrix() );
+        _shader->setProjectionMatrix( pScene->getProjMatrix() );
+
+        _skybox->render();
+
+        _shader->unbind();
+
+        glDepthFunc( GL_LESS );
     }
 
     void LSceneRenderer::_renderTerrainPatches( LScene* pScene )
@@ -73,12 +96,29 @@ namespace engine
 
         _shader->setViewMatrix( pScene->getCurrentCamera()->getViewMatrix() );
         _shader->setProjectionMatrix( pScene->getProjMatrix() );
-        _shader->setPlainColor( LVec3( 0.0f, 0.0f, 0.0f ) );
+        
+        _shader->setGlobalAmbientLight( m_globalLight );
+
+        auto _dirLights = pScene->getLights<LLightDirectional>();
+        for ( int q = 0; q < _dirLights.size(); q++ )
+        {
+            _shader->setLightDirectional( _dirLights[q], q );
+        }
+        _shader->setNumberDirectionalLights( _dirLights.size() );
+
+        _shader->setViewPosition( pScene->getCurrentCamera()->getPosition() );
 
         auto _terrainPatches = pScene->getTerrainGenerator()->getTerrainPatches();
 
         for ( LTerrainPatch* _terrainPatch : _terrainPatches )
         {
+            auto _materials = _terrainPatch->getMaterials();
+
+            for ( int m = 0; m < _materials.size(); m++ )
+            {
+                _shader->setMaterial( _materials[m], m );
+            }
+
             _terrainPatch->render();
         }
 

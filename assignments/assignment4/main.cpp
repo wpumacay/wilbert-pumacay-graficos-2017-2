@@ -3,6 +3,7 @@
 #include "LWindow.h"
 #include "LInputHandler.h"
 #include "LShaderManager.h"
+#include "LAssetsManager.h"
 #include "LSceneRenderer.h"
 #include "hw/LTestScene.h"
 
@@ -88,6 +89,7 @@ int main()
 
     // Initialize shader manager
     engine::LShaderManager::create();
+    engine::LAssetsManager::create();
 
     // TODO: Abstract the debug primitives into a separate layer :(
     engine::LVertexBuffer* _xAxisBuff = new engine::LVertexBuffer();

@@ -14,6 +14,7 @@ namespace engine
         m_currentCamera = NULL;
         m_fog = NULL;
         m_terrainGenerator = NULL;
+        m_skybox = NULL;
     }
 
     LScene::~LScene()
@@ -43,6 +44,12 @@ namespace engine
         {
             delete m_fog;
             m_fog = NULL;
+        }
+
+        if ( m_skybox != NULL )
+        {
+            delete m_skybox;
+            m_skybox = NULL;
         }
 
         m_currentCamera = NULL;

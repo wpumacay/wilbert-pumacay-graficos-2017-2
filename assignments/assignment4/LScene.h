@@ -10,6 +10,7 @@
 #include "LICamera.h"
 #include "LFog.h"
 #include "LTerrainGenerator.h"
+#include "LSkybox.h"
 
 using namespace std;
 
@@ -36,6 +37,8 @@ namespace engine
         glm::mat4 m_projMatrix;
 
         LFog* m_fog;
+
+        LSkybox* m_skybox;
 
         LTerrainGenerator* m_terrainGenerator;
 
@@ -93,6 +96,21 @@ namespace engine
         }
 
         LFog* getFog() { return m_fog; }
+
+        void addSkybox( LSkybox* pSkybox )
+        {
+            if ( m_skybox != NULL )
+            {
+                delete m_skybox;
+            }
+
+            m_skybox = pSkybox;
+        }
+
+        LSkybox* getSkybox()
+        {
+            return m_skybox;
+        }
 
         void update( float dt );
 

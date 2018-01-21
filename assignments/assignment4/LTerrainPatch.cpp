@@ -74,10 +74,10 @@ namespace engine
 				float _xg = m_pos.x + j * _dw - 0.5 * m_patchWidth;
 				float _zg = m_pos.z + i * _dd - 0.5 * m_patchDepth;
 
-				LVec3 _p0( _xg +   0, 2.5 * _getHeight( _xg +   0, _zg +   0 ), _zg +   0 );
-				LVec3 _p1( _xg +   0, 2.5 * _getHeight( _xg +   0, _zg + _dd ), _zg + _dd );
-				LVec3 _p2( _xg + _dw, 2.5 * _getHeight( _xg + _dw, _zg + _dd ), _zg + _dd );
-				LVec3 _p3( _xg + _dw, 2.5 * _getHeight( _xg + _dw, _zg +   0 ), _zg +   0 );
+				LVec3 _p0( _xg +   0, 10.0 * _getHeight( _xg +   0, _zg +   0 ), _zg +   0 );
+				LVec3 _p1( _xg +   0, 10.0 * _getHeight( _xg +   0, _zg + _dd ), _zg + _dd );
+				LVec3 _p2( _xg + _dw, 10.0 * _getHeight( _xg + _dw, _zg + _dd ), _zg + _dd );
+				LVec3 _p3( _xg + _dw, 10.0 * _getHeight( _xg + _dw, _zg +   0 ), _zg +   0 );
 
 				m_terrainVertices[ 6 * ( j + i * m_patchWidthDiv ) + 0 ] = _p0;
 				m_terrainVertices[ 6 * ( j + i * m_patchWidthDiv ) + 1 ] = _p1;
@@ -86,8 +86,14 @@ namespace engine
 				m_terrainVertices[ 6 * ( j + i * m_patchWidthDiv ) + 4 ] = _p2;
 				m_terrainVertices[ 6 * ( j + i * m_patchWidthDiv ) + 5 ] = _p3;
 
-				LVec3 _n0 = LVec3::cross( _p1 - _p0, _p2 - _p0 );
-				LVec3 _n1 = LVec3::cross( _p2 - _p0, _p3 - _p0 );
+				LVec3 _n0 = LVec3::cross( _p1 - _p0, _p2 - _p1 );
+				LVec3 _n1 = LVec3::cross( _p2 - _p0, _p3 - _p2 );
+
+				// if ( _n0.y < 0 ) { std::cout << "????" << std::endl; }
+				// if ( _n1.y < 0 ) { std::cout << "????" << std::endl; }
+
+				// if ( _n0.y < 0 ) { _n0.scale( -1, -1, -1 ); }
+				// if ( _n1.y < 0 ) { _n1.scale( -1, -1, -1 ); }
 
 				m_terrainNormals[ 6 * ( j + i * m_patchWidthDiv ) + 0 ] = _n0;
 				m_terrainNormals[ 6 * ( j + i * m_patchWidthDiv ) + 1 ] = _n0;
@@ -107,10 +113,10 @@ namespace engine
 
 	void LTerrainPatch::render()
 	{
-		if ( m_isWireframe )
-		{
-			glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
-		}
+		// if ( m_isWireframe )
+		// {
+		// 	glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
+		// }
 
 		m_terrainVao->bind();
 
@@ -118,10 +124,10 @@ namespace engine
 
 		m_terrainVao->unbind();
 
-	 	if ( m_isWireframe )
+/*	 	if ( m_isWireframe )
 		{
 			glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
-		}
+		}*/
 	}
 
 
@@ -132,7 +138,9 @@ namespace engine
 			return 0.0f;
 		}
 
-		return m_generator->getHeight( x, z );
+		float _val = m_generator->getHeight( x, z );
+
+		return ( _val < 0.0f ) ? 0.0f : _val;
 	}
 
 }

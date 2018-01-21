@@ -4,15 +4,16 @@
 #include "LScene.h"
 #include "LTerrainPatch.h"
 #include "LHeightmapGenerator.h"
+#include "LMaterial.h"
 #include <queue>
 
-#define TERRAIN_INIT_PATCHS_WINDOW 3
-#define TERRAIN_PATCH_AREA 10
+#define TERRAIN_INIT_PATCHS_WINDOW 5
+#define TERRAIN_PATCH_AREA 20
 #define TERRAIN_PATCH_MIN_DIV 10
-#define TERRAIN_PATCH_BASE_DIV 100
-#define TERRAIN_PATCH_MAX_DIV 100
+#define TERRAIN_PATCH_BASE_DIV 40
+#define TERRAIN_PATCH_MAX_DIV 40
 
-#define TERRAIN_RANGE_FOR_RECALCULATION 2
+#define TERRAIN_RANGE_FOR_RECALCULATION 10
 
 using namespace std;
 

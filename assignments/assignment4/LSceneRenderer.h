@@ -6,11 +6,12 @@
 #include "LScene.h"
 #include "LMesh.h"
 #include "LTerrainPatch.h"
+#include "LSkybox.h"
 //#include "LShadowMap.h"
 
 using namespace std;
 
-#define DEFAULT_GLOBAL_LIGHT LVec3( 1.0f, 1.0f, 1.0f )
+#define DEFAULT_GLOBAL_LIGHT LVec3( 0.7f, 0.7f, 0.7f )
 
 namespace engine
 {
@@ -35,6 +36,7 @@ namespace engine
         void _renderTextured( LScene* pScene );
         void _renderNonTextured( LScene* pScene );
         void _renderTerrainPatches( LScene* pScene );
+        void _renderSkybox( LScene* pScene );
 
         public :
 

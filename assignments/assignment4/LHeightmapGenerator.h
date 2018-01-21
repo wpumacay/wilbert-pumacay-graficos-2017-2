@@ -12,8 +12,11 @@
 #include <cmath>
 #include <vector>
 #include <algorithm>
+#include <random>
 
 using namespace std;
+
+#define _RANDOM( a, b ) ( a + ( b - a ) * ( rand() / ( float )RAND_MAX ) )
 
 namespace engine
 {
@@ -30,9 +33,17 @@ namespace engine
 		float _dotgrad( int hash, float x, float y );
 		float _perlin2d( float x, float y );
 
+		int m_octaves;
+		float m_persistance;
+		float m_lacunarity;
+		float m_noiseScale;
+
+		vector<LVec2> m_octaveOffsets;
+
 		public :
 
 		LHeightmapGenerator();
+		LHeightmapGenerator( int octaves, float persistance, float lacunarity, float noiseScale );
 		~LHeightmapGenerator();
 
 

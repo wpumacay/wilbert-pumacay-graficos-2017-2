@@ -20,6 +20,8 @@ elseif( UNIX AND NOT APPLE )
                     LICamera.cpp
                     LIndexBuffer.cpp
                     LTexture.cpp
+                    LCubeTexture.cpp
+                    LSkybox.cpp
                     LMeshBuilder.cpp
                     LMeshComponent.cpp
                     LHeightmapGenerator.cpp
@@ -30,9 +32,35 @@ elseif( UNIX AND NOT APPLE )
                     LSceneRenderer.cpp
                     LShader.cpp
                     LShaderManager.cpp
+                    LAssetsManager.cpp
                     LVertexArray.cpp
                     LVertexBuffer.cpp
                     LWindow.cpp )
+
+    # add_executable( assignment4.out
+    #                 tut.cpp 
+    #                 LCommon.cpp
+    #                 LComponent.cpp
+    #                 LEntity.cpp
+    #                 LFixedCamera3d.cpp
+    #                 LFpsCamera.cpp
+    #                 LInputHandler.cpp
+    #                 LICamera.cpp
+    #                 LIndexBuffer.cpp
+    #                 LTexture.cpp
+    #                 LMeshBuilder.cpp
+    #                 LMeshComponent.cpp
+    #                 LHeightmapGenerator.cpp
+    #                 LTerrainPatch.cpp
+    #                 LMesh.cpp
+    #                 LScene.cpp
+    #                 LTerrainGenerator.cpp
+    #                 LSceneRenderer.cpp
+    #                 LShader.cpp
+    #                 LShaderManager.cpp
+    #                 LVertexArray.cpp
+    #                 LVertexBuffer.cpp
+    #                 LWindow.cpp )
 
     if ( WINDOWING_SYSTEM STREQUAL "GLFW" )
 

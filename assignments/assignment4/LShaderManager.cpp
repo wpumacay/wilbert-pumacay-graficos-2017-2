@@ -6,6 +6,7 @@
 #include "LShaderBasic3d.h"
 #include "LShaderLighting.h"
 #include "LShaderTerrainPatch.h"
+#include "LShaderSkybox.h"
 
 using namespace std;
 
@@ -83,6 +84,13 @@ namespace engine
 
         programs["terrain_patch"] = _program;
         programObjs["terrain_patch"] = new LShaderTerrainPatch( _program );
+
+        _vShader = createShader( "res/shaders/basic3d_skybox_vs_120.glsl", GL_VERTEX_SHADER );
+        _fShader = createShader( "res/shaders/basic3d_skybox_fs_120.glsl", GL_FRAGMENT_SHADER );
+        _program = createProgram( _vShader, _fShader );
+
+        programs["basic3d_skybox"] = _program;
+        programObjs["basic3d_skybox"] = new LShaderSkybox( _program );
 
 #endif
     }

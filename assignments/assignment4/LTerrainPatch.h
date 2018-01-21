@@ -6,6 +6,8 @@
 #include "LVertexBuffer.h"
 #include "LVertexArray.h"
 #include "LHeightmapGenerator.h"
+#include "LMaterial.h"
+#include "LTexture.h"
 
 using namespace std;
 
@@ -40,6 +42,9 @@ namespace engine
 
 		LVec3 m_pos;
 
+		vector<LTexture*> m_textures;
+		vector<LMaterial*> m_materials;
+
 		public :
 
 		LTerrainPatch( float xp, float zp,
@@ -53,7 +58,12 @@ namespace engine
 		void disableWireframe() { m_isWireframe = false; }
 		bool isWireframe() { return m_isWireframe; }
 
+		void addTexture( LTexture* pTexture ) { m_textures.push_back( pTexture ); }
+		void addMaterial( LMaterial* pMaterial ) { m_materials.push_back( pMaterial ); }
+
 		LVec3 getPosition(){ return m_pos; }
+
+		vector<LMaterial*> getMaterials() { return m_materials; }
 
 		void render() override;
 

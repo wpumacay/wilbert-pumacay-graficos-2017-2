@@ -25,6 +25,12 @@ namespace engine
                                                         TERRAIN_PATCH_BASE_DIV, TERRAIN_PATCH_BASE_DIV,
                                                         m_heightmapGenerator );
 
+                _terrainPatch->addMaterial( new LMaterial( LVec3( 0.1f, 0.1f, 0.1f ),
+                                                           LVec3( 0.529f, 0.807f, 0.92f ),
+                                                           LVec3( 0.529f, 0.807f, 0.92f ),
+                                                           LVec3( 0.529f, 0.807f, 0.92f ),
+                                                           120.0f ) );
+                _terrainPatch->addMaterial( new LMaterial() );
                 m_terrainPatches.push_back( _terrainPatch );
             }
         }
@@ -81,6 +87,8 @@ namespace engine
     {
         // std::cout << "size ( terrainpatches, pool ): "
         //           << "( " << m_terrainPatches.size() << ", " << m_terrainPatchesPool.size() << " )" << std::endl;
+
+        // return;
 
         // Get the camera position
         auto _camera = m_scene->getCurrentCamera();
@@ -167,6 +175,8 @@ namespace engine
                                                                 TERRAIN_PATCH_AREA, TERRAIN_PATCH_AREA, 
                                                                 TERRAIN_PATCH_BASE_DIV, TERRAIN_PATCH_BASE_DIV,
                                                                 m_heightmapGenerator );
+
+                        _terrainPatch->addMaterial( new LMaterial() );
 
                         m_terrainPatches.push_back( _terrainPatch );
                     }

@@ -210,5 +210,20 @@ namespace engine
 
     float toRadians( float angle );
 
+    struct LTextureData
+    {
+        u8* data;
+        int width;
+        int height;
+        int channels;
+    };
+
+    struct LCubeTextureData
+    {
+        u8* vpData[6];
+        int width;
+        int height;
+        int channels;
+    };
 
 }
