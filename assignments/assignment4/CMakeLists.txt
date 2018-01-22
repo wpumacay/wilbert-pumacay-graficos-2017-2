@@ -4,7 +4,7 @@
 if( WIN32 )
 
     message( "Building assignment 4 - windows" )
-    message( "Sorry, haven't configured it yet" )
+    message( "Sorry, haven't configured it yet. Use either linux or macos" )
 
 elseif( UNIX AND NOT APPLE )
 
@@ -36,31 +36,6 @@ elseif( UNIX AND NOT APPLE )
                     LVertexArray.cpp
                     LVertexBuffer.cpp
                     LWindow.cpp )
-
-    # add_executable( assignment4.out
-    #                 tut.cpp 
-    #                 LCommon.cpp
-    #                 LComponent.cpp
-    #                 LEntity.cpp
-    #                 LFixedCamera3d.cpp
-    #                 LFpsCamera.cpp
-    #                 LInputHandler.cpp
-    #                 LICamera.cpp
-    #                 LIndexBuffer.cpp
-    #                 LTexture.cpp
-    #                 LMeshBuilder.cpp
-    #                 LMeshComponent.cpp
-    #                 LHeightmapGenerator.cpp
-    #                 LTerrainPatch.cpp
-    #                 LMesh.cpp
-    #                 LScene.cpp
-    #                 LTerrainGenerator.cpp
-    #                 LSceneRenderer.cpp
-    #                 LShader.cpp
-    #                 LShaderManager.cpp
-    #                 LVertexArray.cpp
-    #                 LVertexBuffer.cpp
-    #                 LWindow.cpp )
 
     if ( WINDOWING_SYSTEM STREQUAL "GLFW" )
 

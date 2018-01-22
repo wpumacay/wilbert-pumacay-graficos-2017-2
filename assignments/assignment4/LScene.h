@@ -112,7 +112,7 @@ namespace engine
             return m_skybox;
         }
 
-        void update( float dt );
+        virtual void update( float dt );
 
         void setShadingMode( bool useSmoothShading );
 

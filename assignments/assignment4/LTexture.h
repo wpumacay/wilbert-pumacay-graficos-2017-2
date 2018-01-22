@@ -31,6 +31,8 @@ namespace engine
         int width() { return m_width; }
         int height() { return m_height; }
 
+        GLuint getTextureIndx() { return m_textureIndx; }
+
     };
 
 

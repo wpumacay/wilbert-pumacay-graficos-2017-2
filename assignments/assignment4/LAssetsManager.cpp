@@ -18,11 +18,17 @@ namespace engine
 
         // Load some 2d texture assets
 
-        LTextureData* _textureData;
+        texturesData["brickwall"]    = loadTexture( "img_brickwall" );
+        texturesData["floor"]    = loadTexture( "img_brickwall_low" );
+        
+        texturesData["grass"]        = loadTexture( "grass_low" );
+        texturesData["grass_sandy"]  = loadTexture( "grass_sandy_low" );
+        texturesData["ground_stony"] = loadTexture( "ground_stony_low" );
+        texturesData["rocks_1"]      = loadTexture( "rocks_1_low" );
+        texturesData["rocks_2"]      = loadTexture( "rocks_2_low" );
+        texturesData["snow"]         = loadTexture( "snow_low" );
+        texturesData["water"]        = loadTexture( "water_low" );
 
-        _textureData = loadTexture( "img_brickwall" );
-
-        texturesData["brickwall"] = _textureData;
 
         // Load some Cubemaps textures
 

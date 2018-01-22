@@ -166,6 +166,26 @@ namespace engine
         }
     };
 
+    struct LInd2
+    {
+
+        int i;
+        int j;
+
+        LInd2()
+        {
+            i = 0;
+            j = 0;
+        }
+
+        LInd2( int i, int j )
+        {
+            this->i = i;
+            this->j = j;
+        }
+
+    };
+
     struct LVec2
     {
         GLfloat x;

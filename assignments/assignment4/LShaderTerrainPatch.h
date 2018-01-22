@@ -35,10 +35,13 @@ namespace engine
         LUniformsDirLight m_ulDir[2];
         GLuint m_uNumLightsDir;
 
-        LUniformsMaterial m_uMaterial[4];
+        LUniformsMaterial m_uMaterial[7];
 
         GLuint m_uGlobalAmbientLight;
         GLuint m_uViewPos;
+
+        GLuint m_uTextures[7];
+        GLuint m_uTerrainVariation;
 
         public :
 
@@ -54,6 +57,8 @@ namespace engine
             m_uViewPos = glGetUniformLocation( m_id, "u_viewPos" );
 
             m_uNumLightsDir = glGetUniformLocation( m_id, "u_numDirectionalLights" );
+
+            m_uTerrainVariation = glGetUniformLocation( m_id, "u_variation" );
 
             string _u_variant;
 
@@ -78,7 +83,7 @@ namespace engine
 
             }
 
-            for ( int q = 0; q < 4; q++ )
+            for ( int q = 0; q < 7; q++ )
             {
                 string _u_location = "u_material";
                 _u_location += "[";
@@ -96,6 +101,13 @@ namespace engine
 
                 _u_variant = _u_location + ".shininess";
                 m_uMaterial[q].shininess = glGetUniformLocation( m_id, _u_variant.c_str() );
+
+                _u_location = "u_textures";
+                _u_location += "[";
+                _u_location += to_string( q );
+                _u_location += "]";
+
+                m_uTextures[q] = glGetUniformLocation( m_id, _u_location.c_str() );
             }
 
             unbind();
@@ -138,12 +150,26 @@ namespace engine
 
         void setMaterial( LMaterial* pMaterial, int indx )
         {
-            assert( indx < 4 && indx >= 0 );
+            assert( indx < 7 && indx >= 0 );
 
             _setVec3( m_uMaterial[indx].ambient, pMaterial->ambient );
             _setVec3( m_uMaterial[indx].diffuse, pMaterial->diffuse );
             _setVec3( m_uMaterial[indx].specular, pMaterial->specular );
             _setFloat( m_uMaterial[indx].shininess, pMaterial->shininess );
+        }
+
+        void setTexture( LTexture* pTexture, int indx )
+        {
+            assert( indx < 7 && indx >= 0 );
+
+            _setInt( m_uTextures[indx], pTexture->getTextureIndx() );
+        }
+
+        void setTerrainVariation( int variationIndx )
+        {
+            assert( variationIndx < 4 && variationIndx >= 0 );
+
+            _setInt( m_uTerrainVariation, variationIndx );
         }
 
     };

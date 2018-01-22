@@ -11,9 +11,52 @@ namespace engine
 
     LMesh::LMesh( const vector<LVec3>& vertices, 
                   const vector<LVec3>& normals,
+                  const vector<LVec2>& texCoords )
+    {
+        m_usesIndices = false;
+
+        type = "base";
+        m_vertices = vertices;
+        m_normals = normals;
+        m_texCoords = texCoords;
+
+        m_vBuffer = new LVertexBuffer();
+        m_vBuffer->setData( sizeof( LVec3 ) * vertices.size(),
+                            3, (GLfloat*) vertices.data() );
+
+        m_nBuffer = new LVertexBuffer();
+        m_nBuffer->setData( sizeof( LVec3 ) * normals.size(),
+                            3, (GLfloat*) normals.data() );
+
+        m_tBuffer = new LVertexBuffer();
+        m_tBuffer->setData( sizeof( LVec2 ) * texCoords.size(),
+                            2, ( GLfloat* ) texCoords.data() );
+
+        m_indexBuffer = NULL;
+
+        m_vertexArray = new LVertexArray();
+        m_vertexArray->addBuffer( m_vBuffer, 0 );
+        m_vertexArray->addBuffer( m_nBuffer, 1 );
+        m_vertexArray->addBuffer( m_tBuffer, 2 );
+
+        // Create a default material
+        m_material = new LMaterial();
+
+        scale = LVec3( 1.0f, 1.0f, 1.0f );
+
+        drawAsWireframe = false;
+        drawEnvMapped = false;
+
+        rotation = glm::mat4( 1.0f );
+    }
+
+    LMesh::LMesh( const vector<LVec3>& vertices, 
+                  const vector<LVec3>& normals,
                   const vector<LInd3>& indices )
     {
         type = "base";
+        m_usesIndices = true;
+
         m_vertices = vertices;
         m_normals = normals;
         m_indices = indices;
@@ -42,6 +85,7 @@ namespace engine
         scale = LVec3( 1.0f, 1.0f, 1.0f );
 
         drawAsWireframe = false;
+        drawEnvMapped = false;
 
         rotation = glm::mat4( 1.0f );
     }
@@ -53,7 +97,12 @@ namespace engine
         m_tBuffer = NULL;
 
         delete m_vertexArray;
-        delete m_indexBuffer;
+
+        if ( m_indexBuffer != NULL )
+        {
+            delete m_indexBuffer;
+        }
+            
         delete m_material;
     }
 
@@ -106,15 +155,31 @@ namespace engine
             glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
         }
 
-        m_vertexArray->bind();
-        m_indexBuffer->bind();
+        if ( m_usesIndices )
+        {
+            m_vertexArray->bind();
+            m_indexBuffer->bind();
 
-        glDrawElements( GL_TRIANGLES, 
-                        m_indexBuffer->getCount(), 
-                        GL_UNSIGNED_INT, 0 );
+            glDrawElements( GL_TRIANGLES, 
+                            m_indexBuffer->getCount(), 
+                            GL_UNSIGNED_INT, 0 );
 
-        m_indexBuffer->unbind();
-        m_vertexArray->unbind();
+            m_indexBuffer->unbind();
+            m_vertexArray->unbind();
+        }
+        else
+        {
+            // cout << "drawing?? " << m_vertices.size() << endl;
+
+            m_vertexArray->bind();
+
+            glDrawArrays( GL_TRIANGLES, 
+                          0, 
+                          m_vertices.size() );
+
+            m_vertexArray->unbind();
+        }
+
 
         if ( drawAsWireframe )
         {

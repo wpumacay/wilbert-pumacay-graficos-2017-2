@@ -1,6 +1,8 @@
 
 #include "LMeshBuilder.h"
 
+#include <map>
+
 using namespace std;
 
 namespace engine
@@ -196,7 +198,32 @@ namespace engine
     }
 
 
+    LMesh* LMeshBuilder::createFromObj( const char* filename )
+    {
+        LMesh* _mesh = NULL;
 
+        vector<LVec3> _vertices;
+        vector<LVec3> _normals;
+        vector<LVec2> _texCoord;
+        vector<LInd3> _indices;
+
+        ifstream _fileHandle( filename );
+
+        if ( !_fileHandle.is_open() )
+        {
+            cout << "LMeshBuilder::createFromObj> couldn't open the file " << filename << endl;
+            return NULL;
+        }
+
+        LObjInfo _objInfo;
+
+        _parseObj( _fileHandle, _objInfo );
+
+        _mesh = new LMesh( _objInfo.vertices, _objInfo.normals, _objInfo.texCoords );
+        _mesh->type = "obj";
+        
+        return _mesh;
+    }
 
     /***********************************************************************
     * HELPER FUNCTIONS
@@ -234,15 +261,108 @@ namespace engine
 
         while ( pos != std::string::npos )
         {
-            _res.push_back( txt.substr( initpos, pos - initpos + 1 ) );
+            _res.push_back( txt.substr( initpos, pos - initpos ) );
             initpos = pos + 1;
 
             pos = txt.find( separator, initpos );
         }
 
-        _res.push_back( txt.substr( initpos, std::min( pos, (int) txt.size() ) - initpos + 1 ) );
+        _res.push_back( txt.substr( initpos, std::min( pos, (int) txt.size() ) - initpos ) );
                     
         return _res;
+    }
+
+    void LMeshBuilder::_parseObj( ifstream& fileHandle,
+                                  LObjInfo& obj )
+    {
+        cout << "parsing geometry" << endl;
+
+        map<string, LObjGeometryInfo> _objects;
+
+        string _currentObjectName;
+
+        string _materialsFile;
+        string _line;
+
+        while ( getline( fileHandle, _line ) )
+        {
+            vector<string> _vStr = _split( _line, ' ' );
+            // cout << "??? " << _vStr[0] << endl;
+
+            if ( _vStr[0] == OBJ_COMMENT )
+            {
+                continue;
+            }
+            else if ( _vStr[0] == OBJ_MATERIAL_LIB )
+            {
+                obj.materialFile = _vStr[1];
+            }
+            else if ( _vStr[0] == OBJ_OBJECT_NAME )
+            {
+                _currentObjectName = _vStr[1];
+                _objects[_currentObjectName] = LObjGeometryInfo();
+            }
+            else if ( _vStr[0] == OBJ_GROUP_NAME )
+            {
+                // cout << "obj model loader doesn't support group names yet" << endl;
+                // assert( false );
+                continue;
+            }
+            else if ( _vStr[0] == OBJ_VERTEX )
+            {
+                if ( _currentObjectName == "" )
+                {
+                    _currentObjectName = "default";
+                    _objects[_currentObjectName] = LObjGeometryInfo();
+                }
+
+                LVec3 _v( stof( _vStr[1] ), stof( _vStr[2] ), stof( _vStr[3] ) );
+
+                _objects[_currentObjectName].vertices.push_back( _v );
+            }
+            else if ( _vStr[0] == OBJ_NORMAL )
+            {
+                LVec3 _n( stof( _vStr[1] ), stof( _vStr[2] ), stof( _vStr[3] ) );
+
+                _objects[_currentObjectName].normals.push_back( _n );
+            }
+            else if ( _vStr[0] == OBJ_TEXTURE )
+            {
+                LVec2 _t( stof( _vStr[1] ), stof( _vStr[2] ) );
+
+                _objects[_currentObjectName].texCoords.push_back( _t );
+            }
+            else if ( _vStr[0] == OBJ_MATERIAL_ID )
+            {
+                continue;// skip, no material id support yet
+            }
+            else if ( _vStr[0] == OBJ_SMOOTH_SHADING )
+            {
+                continue;
+            }
+            else if ( _vStr[0] == OBJ_FACE )
+            {
+                for ( int q = 1; q < 4; q++ )
+                {
+                    vector<string> _vVertex = _split( _vStr[q], '/' );
+
+                    obj.vertices.push_back( _objects[_currentObjectName].vertices[ stoi( _vVertex[0] ) - 1 ] );
+                    obj.texCoords.push_back( _objects[_currentObjectName].texCoords[ stoi( _vVertex[1] ) - 1 ] );
+                    obj.normals.push_back( _objects[_currentObjectName].normals[ stoi( _vVertex[2] ) - 1 ] );
+                }
+            }
+            else
+            {
+                // cout << "not supported: " << _vStr[0] << endl;
+                continue;
+            }
+        }
+
+        cout << "vl: " << obj.vertices.size() << endl;
+        cout << "nl: " << obj.normals.size() << endl;
+        cout << "tl: " << obj.texCoords.size() << endl;
+
+        cout << "done geometry" << endl;
     }
 
 }

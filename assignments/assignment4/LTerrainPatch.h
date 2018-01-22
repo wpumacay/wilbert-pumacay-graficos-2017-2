@@ -11,6 +11,8 @@
 
 using namespace std;
 
+#define TERRAIN_REGION2_VARIATIONS 4
+
 namespace engine
 {
 
@@ -22,11 +24,13 @@ namespace engine
 
 		LVertexBuffer* m_terrainVertBuff;
 		LVertexBuffer* m_terrainNormBuff;
+		LVertexBuffer* m_terrainTexBuff;
 		LVertexArray* m_terrainVao;
 
 
 		vector<LVec3> m_terrainVertices;
 		vector<LVec3> m_terrainNormals;
+		vector<LVec2> m_terrainTexCoords;
 
 		GLfloat m_patchWidth;
 		GLfloat m_patchDepth;
@@ -42,8 +46,7 @@ namespace engine
 
 		LVec3 m_pos;
 
-		vector<LTexture*> m_textures;
-		vector<LMaterial*> m_materials;
+		int m_terrainVariation;
 
 		public :
 
@@ -58,15 +61,11 @@ namespace engine
 		void disableWireframe() { m_isWireframe = false; }
 		bool isWireframe() { return m_isWireframe; }
 
-		void addTexture( LTexture* pTexture ) { m_textures.push_back( pTexture ); }
-		void addMaterial( LMaterial* pMaterial ) { m_materials.push_back( pMaterial ); }
-
 		LVec3 getPosition(){ return m_pos; }
-
-		vector<LMaterial*> getMaterials() { return m_materials; }
 
 		void render() override;
 
+		int getTerrainVariation() { return m_terrainVariation; }
 
 	};
 

@@ -30,13 +30,17 @@ namespace engine
         LVertexBuffer* m_tBuffer;
         vector<LVec3> m_vertices;
         vector<LVec3> m_normals;
+        vector<LVec2> m_texCoords;
         vector<LInd3> m_indices;
+
+        bool m_usesIndices;
 
         public :
 
         string type;
 
         bool drawAsWireframe;
+        bool drawEnvMapped;
 
         LVec3 pos;
         glm::mat4 rotation;
@@ -45,6 +49,10 @@ namespace engine
         LMesh( const vector<LVec3>& vertices, 
                const vector<LVec3>& normals,
                const vector<LInd3>& indices );
+
+        LMesh( const vector<LVec3>& vertices,
+               const vector<LVec3>& normals,
+               const vector<LVec2>& texCoords );
 
         ~LMesh();
 
@@ -56,6 +64,7 @@ namespace engine
         LMaterial* getMaterial() const { return m_material; }
 
         void setTexture( LTexture* pTexture, const vector<LVec2>& texCoord );
+        void setTexCoordinates( const vector<LVec2>& texCoord );
 
         LVertexArray* getVertexArray() const { return m_vertexArray; }
         LIndexBuffer* getIndexBuffer() const { return m_indexBuffer; }

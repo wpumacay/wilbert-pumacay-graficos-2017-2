@@ -85,6 +85,10 @@ namespace engine
 
         //std::cout << "pitch: " << m_pitch << std::endl;
         //std::cout << "yaw: " << m_yaw << std::endl;
+
+        // std::cout << "cy: " << m_pos.y << std::endl;
+        // std::cout << "cx: " << m_pos.x << std::endl;
+        // std::cout << "cz: " << m_pos.z << std::endl;
     }
 
     void LFpsCamera::_updateCamera()

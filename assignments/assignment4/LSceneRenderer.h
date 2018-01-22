@@ -30,11 +30,13 @@ namespace engine
 
         vector<LMesh*> m_nonTexturedRenderables;
         vector<LMesh*> m_texturedRenderables;
+        vector<LMesh*> m_envMappedRenderables;
 
         void _configureShadowmapping();
 
         void _renderTextured( LScene* pScene );
         void _renderNonTextured( LScene* pScene );
+        void _renderEnvMapped( LScene* pScene );
         void _renderTerrainPatches( LScene* pScene );
         void _renderSkybox( LScene* pScene );
 

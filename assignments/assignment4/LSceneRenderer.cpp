@@ -4,6 +4,7 @@
 #include "LShaderManager.h"
 #include "LShaderTerrainPatch.h"
 #include "LShaderSkybox.h"
+#include "LShaderEnvMapping.h"
 #include "LEntity.h"
 #include "LMeshComponent.h"
 #include "LMesh.h"
@@ -42,6 +43,10 @@ namespace engine
             {
                 m_texturedRenderables.push_back( _mesh );
             }
+            else if ( _mesh->drawEnvMapped )
+            {
+                m_envMappedRenderables.push_back( _mesh );
+            }
             else
             {
                 m_nonTexturedRenderables.push_back( _mesh );
@@ -60,7 +65,28 @@ namespace engine
         _renderTextured( pScene );
         _renderNonTextured( pScene );
 
+        _renderEnvMapped( pScene );
         _renderSkybox( pScene );
+    }
+
+    void LSceneRenderer::_renderEnvMapped( LScene* pScene )
+    {
+        LShaderEnvMapping* _shader = ( LShaderEnvMapping* ) LShaderManager::INSTANCE->programObjs["envMapping"];
+
+        _shader->bind();
+
+        _shader->setViewMatrix( pScene->getCurrentCamera()->getViewMatrix() );
+        _shader->setProjectionMatrix( pScene->getProjMatrix() );
+        _shader->setViewPosition( pScene->getCurrentCamera()->getPosition() );
+
+        for ( LMesh* _mesh : m_envMappedRenderables )
+        {
+            _shader->setModelMatrix( _mesh->getModelMatrix() );
+
+            _mesh->render();
+        }
+
+        _shader->unbind();
     }
 
     void LSceneRenderer::_renderSkybox( LScene* pScene )
@@ -109,16 +135,24 @@ namespace engine
         _shader->setViewPosition( pScene->getCurrentCamera()->getPosition() );
 
         auto _terrainPatches = pScene->getTerrainGenerator()->getTerrainPatches();
+        auto _terrainMaterials = pScene->getTerrainGenerator()->getTerrainMaterials();
+        auto _terrainTextures = pScene->getTerrainGenerator()->getTerrainTextures();
+
+        for ( int m = 0; m < _terrainMaterials.size(); m++ )
+        {
+            _shader->setMaterial( _terrainMaterials[m], m );
+        }
+
+        for ( int m = 0; m < _terrainTextures.size(); m++ )
+        {
+            _terrainTextures[m]->bind();
+            _shader->setTexture( _terrainTextures[m], _terrainTextures[m]->getTextureIndx() );
+        }        
+
 
         for ( LTerrainPatch* _terrainPatch : _terrainPatches )
         {
-            auto _materials = _terrainPatch->getMaterials();
-
-            for ( int m = 0; m < _materials.size(); m++ )
-            {
-                _shader->setMaterial( _materials[m], m );
-            }
-
+            _shader->setTerrainVariation( _terrainPatch->getTerrainVariation() );
             _terrainPatch->render();
         }
 
@@ -292,6 +326,7 @@ namespace engine
     {
         m_nonTexturedRenderables.clear();
         m_texturedRenderables.clear();
+        m_envMappedRenderables.clear();
 
         glUseProgram( 0 );
     }
