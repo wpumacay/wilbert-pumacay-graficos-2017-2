@@ -14,4 +14,4 @@ To use in macOS please make sure you are using GLUT and v120 enabled in the root
 
 ## * Some sample output
 
-TODO: Adding report
+![Scene](_img/assignment4_sample.jpg)
