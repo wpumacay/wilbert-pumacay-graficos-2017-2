@@ -3,8 +3,13 @@
 
 ## * To compile and run
 
+Check the root [README](https://github.com/wpumacay/wilbert-pumacay-graficos-2017-2/blob/master/README.md), and then just run the executable
+
 ```
+cd [repo-root]
+cmake .
 make
+cd [repo-root]/assignments/assignment4/
 ./assignment4.out
 ```
 
