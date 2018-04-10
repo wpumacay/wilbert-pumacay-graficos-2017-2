@@ -162,9 +162,11 @@ void onDisplayCallback()
 
     glUseProgram( 0 );
 
+    cout << "rendering scene" << endl;
     g_renderer->begin( g_scene );
     g_renderer->renderScene( g_scene );
     g_renderer->end( g_scene );
+    cout << "done rendering scene" << endl;
 }
 
 #endif
@@ -257,6 +259,7 @@ int main()
     g_window->registerKeyCallback( onKeyCallback );
 
 #ifdef GLUT_SUPPORT_ENABLED
+    cout << "INITIALIZED GLUT CALLBACKS!!!" << endl;
     g_window->registerMouseCallback( onMouseCallback );
     g_window->registerDisplayCallback( onDisplayCallback );
 #endif
