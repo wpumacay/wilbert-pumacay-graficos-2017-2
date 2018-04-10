@@ -73,7 +73,7 @@ endif()
 
 
 add_subdirectory( ext/glfw )
-add_subdirectory( ext/glm )
+# add_subdirectory( ext/glm )
 
 include_directories( ext/glfw/include )
 include_directories( ext/glm )
