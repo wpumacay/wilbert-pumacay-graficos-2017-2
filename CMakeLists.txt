@@ -59,6 +59,8 @@ message( "USING GLUT AS WINDOWING SYSTEM" )
 
 set( WINDOWING_SYSTEM "GLUT" CACHE STRING "GLUT" )
 
+message( "GLEW LIBS: ${GLEW_LIBRARIES}" )
+
 add_definitions( -DUSE_GLUT )
 add_definitions( -DGLUT_SUPPORT_ENABLED ) 
 

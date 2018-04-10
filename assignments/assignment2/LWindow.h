@@ -9,7 +9,15 @@
 #include <GL/glew.h>
 
 #ifndef GLFW_SUPPORT_ENABLED
+    #ifdef __APPLE__
+
+    #include "GLUT/glut.h"
+
+    #else
+
     #include <GL/glut.h>
+
+    #endif
 #else
     #include <GLFW/glfw3.h>
 #endif

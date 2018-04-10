@@ -78,16 +78,16 @@ elseif( APPLE )
     if ( ${WINDOWING_SYSTEM} EQUAL "GLFW" )
 
         target_link_libraries( assignment3.out glfw
-                               ${OPENGL_LIBRARIES} 
-                               GLEW::GLEW 
-                               ${GLUT_LIBRARY} )
+                               "-framework GLUT"
+                               "-framework OpenGL"
+                               ${GLEW_LIBRARIES} )
 
     elseif( ${WINDOWING_SYSTEM} EQUAL "GLUT" )
 
         target_link_libraries( assignment3.out
-                               ${OPENGL_LIBRARIES} 
-                               GLEW::GLEW 
-                               ${GLUT_LIBRARY} )
+                               "-framework GLUT"
+                               "-framework OpenGL"
+                               ${GLEW_LIBRARIES} )
     else()
 
         message( "WINDOWING_SYSTEM NOT SET CORRECTLY" )
