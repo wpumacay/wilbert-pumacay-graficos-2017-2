@@ -1,31 +1,38 @@
 language: cpp
 sudo: false
-dist: trusty
-compiler:
-  - gcc
-os:
-  - linux
+matrix:
+  include:
+    - os: osx
+      osx_image: xcode8
+      env:
+        - MATRIX_EVAL="brew install gcc5 && CC=gcc-5 && CXX=g++-5"
+
+    - os: linux
+      dist: trusty
+      addons:
+        apt:
+          packages:
+              - g++-5
+              - libglew-dev
+              - freeglut3-dev
+              - libxi-dev
+              - libxmu-dev
+              - xserver-xorg-video-dummy
+              - xpra
+              - xorg-dev
+              - opencl-headers
+              - libgl1-mesa-dev
+              - libxcursor-dev
+              - libpulse-dev
+              - libxinerama-dev
+              - libxrandr-dev
+              - libxv-dev
+              - libasound2-dev
+              - libudev-dev
+              - mesa-utils
+              - libgl1-mesa-glx
+      env:
+        - MATRIX_EVAL="CC=gcc-5 && CXX=g++-5"
 script:
   - cmake .
   - make
-addons:
-  apt:
-    packages:
-        - libglew-dev
-        - freeglut3-dev
-        - libxi-dev
-        - libxmu-dev
-        - xserver-xorg-video-dummy
-        - xpra
-        - xorg-dev
-        - opencl-headers
-        - libgl1-mesa-dev
-        - libxcursor-dev
-        - libpulse-dev
-        - libxinerama-dev
-        - libxrandr-dev
-        - libxv-dev
-        - libasound2-dev
-        - libudev-dev
-        - mesa-utils
-        - libgl1-mesa-glx
