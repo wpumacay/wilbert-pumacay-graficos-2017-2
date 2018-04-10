@@ -1,0 +1,10 @@
+language: cpp
+sudo: false
+dist: trusty
+compiler:
+  - gcc
+os:
+  - linux
+script:
+  - cmake .
+  - make
